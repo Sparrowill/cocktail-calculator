@@ -27,7 +27,6 @@ module.exports = {
           owner: "Sparrowill",
           name: "cocktail-calculator"
         },
-        //authToken:
       }
   }
   ]

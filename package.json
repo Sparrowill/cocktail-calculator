@@ -1,8 +1,8 @@
 {
-  "name": "electron-publish-example",
-  "productName": "electron-publish-example",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "name": "cocktail-calculator",
+  "productName": "cocktail-calculator",
+  "version": "1.0.1",
+  "description": "A shopping list creator for Cocktail Hire",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
