@@ -1,5 +1,3 @@
-import { GITHUB_TOKEN } from "./.secret"
-
 module.exports = {
   packagerConfig: {},
   rebuildConfig: {},
@@ -29,8 +27,8 @@ module.exports = {
           owner: "Sparrowill",
           name: "cocktail-calculator"
         },
-        authToken: GITHUB_TOKEN
+        //authToken:
       }
-    }
+  }
   ]
 }
