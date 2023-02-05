@@ -29,19 +29,4 @@
     "@electron-forge/publisher-github": "^6.0.4",
     "electron": "22.2.0"
   }
-/*  "config": {
-    "forge": {
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "Sparrowill",
-              "name": "cocktail-calculator"
-            }
-          }
-        }
-      ]
-    }
-  }*/
 }
