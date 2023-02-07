@@ -3,9 +3,11 @@
 //
 // Functions to augment html functionality
 //////////////////////////////////////////
-
 // Global variables
 const path = './lists/cocktails.test.json';
+var clientDetails = Object;
+var shoppingList = Object;
+var chosenCocktails = Object;
 // getCocktails()
 // 
 // Has no inputs
@@ -69,6 +71,39 @@ function createCheckboxes(cocktailNames) {
     });
 }
 
+// hideClientDetails()
+// Takes no input
+// Returns no outputs
+//
+// This function collects the client details and stores them in an object
+// This object is then printed to console
+// The function then moves the page on to selec cocktails required
+
+function hideClientDetails() {
+    let details = document.querySelectorAll('input[name="details"]');
+    let values = [];
+    var error = false;
+    details.forEach((detail) => {
+        if (detail.value.length!=0 || detail.id == "address2" ){
+            values.push(detail.value);
+        }
+        else{
+            error = true;
+            console.log("ERR");
+            document.getElementById('clientDetailsError').style.visibility = "visible";
+            return;
+        }
+    });
+    if(error == false){
+        document.getElementById('clientDetailsError').style.visibility = "hidden";
+        document.getElementById('clientDetails').style.display = "none";
+        document.getElementById('checkboxes').style.display = "block";
+        document.getElementById('submit').style.display = "block";
+        clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10])
+        //TODO: Store these somewhere
+    }
+}
+
 // submitData())
 // Takes no inputs
 // returns no outputs
@@ -120,7 +155,7 @@ function storeIngredients(cocktails, names){
             j++;
         }
     }
-    console.log(cocktails);
+    chosenCocktails = cocktails;
     combineIngredients(cocktails, ids);
 }
 
@@ -148,17 +183,40 @@ function combineIngredients(cocktails, ids){
         combineMixers(mixersList, mixers);
         combineOther(otherList,other);
     }
-    console.log(alcoholList); 
-    console.log(garnishList); 
-    console.log(juicesList); 
-    console.log(mixersList);
-    console.log(otherList);
 
-    const shoppingList = alcoholList.concat(garnishList, juicesList, mixersList, otherList);
+    shoppingList = alcoholList.concat(garnishList, juicesList, mixersList, otherList);
     console.log(shoppingList);
+    console.log(clientDetails);
+    console.log(chosenCocktails);
+    showResults(ids);
 }
 
-// combineAlcohol()
+// showResults()
+// Takes input of ids to get number of chosen cocktails also (uses globals)
+//retuns no outputs
+//
+// This function is temporary, prints object contents to index.html
+function showResults(ids){
+    document.getElementById('checkboxes').style.display = "none";
+    document.getElementById('submit').style.display = "none";
+    document.getElementById('results').insertAdjacentHTML('beforeend',JSON.stringify(shoppingList));
+    document.getElementById('results').appendChild(document.createElement("br"));
+    document.getElementById('results').appendChild(document.createElement("br"));
+    document.getElementById('results').insertAdjacentHTML('beforeend',JSON.stringify(clientDetails));
+    document.getElementById('results').appendChild(document.createElement("br"));
+    document.getElementById('results').appendChild(document.createElement("br"));
+
+    for(let i = 0; i < ids.length; i++){
+        document.getElementById('results').insertAdjacentHTML('beforeend',chosenCocktails.Cocktails[ids[i]-1].description);
+        document.getElementById('results').appendChild(document.createElement("br"));
+        document.getElementById('results').appendChild(document.createElement("br"));
+
+
+    }
+}   
+
+
+// combineAlcohol()C
 // Takes inputs of the current list of alcohols used, and the alcohols in the new cocktail
 // returns an altered list of alcohols used
 //
@@ -293,52 +351,6 @@ function combineOther(otherList, other){
     return;
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// hideClientDetails()
-// Takes no input
-// Returns no outputs
-//
-// This function collects the client details and stores them in an object
-// This object is then printed to console
-// The function then moves the page on to selec cocktails required
-
-function hideClientDetails() {
-    let details = document.querySelectorAll('input[name="details"]');
-    let values = [];
-    var error = false;
-    details.forEach((detail) => {
-        if (detail.value.length!=0 || detail.id == "address2" ){
-            values.push(detail.value);
-        }
-        else{
-            error = true;
-            console.log("ERR");
-            document.getElementById('clientDetailsError').style.visibility = "visible";
-            return;
-        }
-    });
-    if(error == false){
-        document.getElementById('clientDetailsError').style.visibility = "hidden";
-        document.getElementById('clientDetails').style.display = "none";
-        document.getElementById('checkboxes').style.display = "block";
-        document.getElementById('submit').style.display = "block";
-        const clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10])
-        console.log(clientDetails);
-        //TODO: Store these somewhere
-    }
-}
 
 // ClientObject(values)
 //Takes an input of values from the input form

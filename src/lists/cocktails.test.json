@@ -3,6 +3,7 @@
         {
             "id": 1,
             "name": "Amaretto Sour",
+            "description": "Almond Liqueur, Lemon Juice, Sugar and a Maraschino Cherry",
             "ingredients": {
                 "alcohol":[
                     {
@@ -41,6 +42,7 @@
         {
             "id": 2,
             "name": "Aperol Spritz",
+            "description": "Aperol Liqueur with Soda & Prosecco Served with mixed fruits. A great summer drink",
             "ingredients": {
                 "alcohol":[
                     {
@@ -81,6 +83,7 @@
         {
             "id": 3,
             "name": "Aviation",
+            "description": "Floral and fresh, Gin and Violet Liqueur shaken over ice, served with a Maraschino Cherry",
             "ingredients": {
                 "alcohol":[
                     {
@@ -127,6 +130,7 @@
         {
             "id": 4,
             "name": "Bahama Mama",
+            "description": "Totally Tropical! White Rum with Pineapple, Orange, and Passionfruit",
             "ingredients": {
                 "alcohol":[
                     {
@@ -177,6 +181,7 @@
         {
             "id": 5,
             "name": "Bellini",
+            "description": "Peach with Prosecco. So simple, but it works. ",
             "ingredients": {
                 "alcohol":[
                     {
@@ -211,6 +216,7 @@
                     }
                     ]
             }
+
         }
     ]
 }
