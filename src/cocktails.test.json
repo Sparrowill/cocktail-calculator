@@ -216,8 +216,312 @@
                     }
                     ]
             }
+        },
+        
+        {
+            "id": 6,
+            "name": "Between the Sheets",
+            "description": "Brandy, Cointreau, and Lemon. Served up",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"brandy",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"cointreau",
+                        "volume": 15,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"lemon juice",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                    ],
+                "mixers":[
+                    {
 
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name":"lemon slice",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+
+                    ],
+                "other":[
+                    {
+
+                    }
+                    ]
+            }
+        },
+        {
+            "id": 7,
+            "name": "Black Russian",
+            "description": "Coffee, Cola, and Vodka. A curious combination",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"coffee liqueur",
+                        "volume": 15,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"vodka",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+
+                    }
+                    ],
+                "mixers":[
+                    {
+
+                    }
+                ],
+                "garnish":[
+                    {
+
+                    }
+
+                    ],
+                "other":[
+                    {
+
+                    }
+                    ]
+            }
+        },
+        {
+            "id": 8,
+            "name": "Bramble",
+            "description": "Gin, served with a Sugar/Lemon mix & Raspberry to give this Gin drink a sharp initial taste, which then settles as a sweet fresh fruity cocktail. ",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"gin",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"lemon juice",
+                        "volume": 25,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"raspberry puree",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                    ],
+                "mixers":[
+                    {
+
+                    }
+                ],
+                "garnish":[
+                    {
+                      
+                    }
+
+                    ],
+                "other":[
+                    {
+                        "name": "sugar",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                    ]
+            }
+        },
+        {
+            "id": 9,
+            "name": "Clover Club",
+            "description": " From Philadelphia in the late 1800s, a smooth gin-based cocktail. Served in a coupette.",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"gin",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"lemon juice",
+                        "volume": 25,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"raspberry puree",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                    ],
+                "mixers":[
+                    {
+
+                    }
+                ],
+                "garnish":[
+                    {
+                      "name": "raspberry",
+                      "volume": 2,
+                      "unit": "pcs"
+                    }
+
+                    ],
+                "other":[
+                    {
+                        "name": "sugar",
+                        "volume": 25,
+                        "unit": "ml"
+                    },
+                    {
+                        "name": "egg white",
+                        "volume": 0.5,
+                        "unit": "pcs"
+                    }
+                    ]
+            }
+        },
+        {
+            "id": 10,
+            "name": "Cosmopolitan",
+            "description": "A Posh Vodka & Cranberry, served in a martini glass with Orange Liqueur & a burnt zest of Orange peel to garnish.",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"cointreau",
+                        "volume": 15,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"vodka",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"cranberry juice",
+                        "volume": 50,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"lime juice",
+                        "volume": 10,
+                        "unit": "ml"
+                    }
+                    ],
+                "mixers":[
+                    {
+
+                    }
+                ],
+                "garnish":[
+                    {
+                      "name": "orange slice",
+                      "volume": 1,
+                      "unit": "pcs"
+                    }
+
+                    ],
+                "other":[
+                    {
+                        
+                    }
+                    ]
+            }
+        },
+        {
+            "id": 11,
+            "name": "Cuba Libre",
+            "description": "“Free Cuba” a Rum, with coke, a squeeze of lime to finish",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"white rum",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        
+                    }
+
+                    ],
+                "mixers":[
+                    {
+                        "name": "cola",
+                        "volume": 75,
+                        "unit": "ml"
+                    }
+                ],
+                "garnish":[
+                    {
+                      "name": "lime slice",
+                      "volume": 1,
+                      "unit": "pcs"
+                    }
+
+                    ],
+                "other":[
+                    {
+                    
+                    }
+                    ]
+            }
         }
     ]
 }
-       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
