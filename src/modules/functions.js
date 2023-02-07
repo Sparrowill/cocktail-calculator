@@ -71,8 +71,8 @@ function createCheckboxes(cocktailNames) {
 // Takes no inputs
 // returns no outputs
 
-// This function takes all the selected cocktails, and passes them as an array to getIngredients()
-function submitCheckboxes() {
+// This function takes all the inputted data, and prints them to console
+function submitData() {
     
     let checkboxes = document.querySelectorAll('input[name="cocktail"]:checked');
     let values = [];
@@ -87,6 +87,40 @@ function submitCheckboxes() {
         document.getElementById('emptyArrayError').style.visibility = "visible"; 
     }
     
+}
+// hideClientDetails()
+// Takes no input
+// Returns no outputs
+//
+// This function collects the client details and stores them in an array
+// This array is then printed to console
+// The function then moves the page on to selec cocktails required
+
+function hideClientDetails() {
+    let details = document.querySelectorAll('input[name="details"]');
+    console.log(details);
+    let values = [];
+    var error = false;
+    details.forEach((detail) => {
+        if (detail.value.length!=0 || detail.id == "address2" ){
+            values.push(detail.value);
+        }
+        else{
+            error = true;
+            console.log("ERR");
+            document.getElementById('clientDetailsError').style.visibility = "visible";
+            return;
+        }
+    });
+    if(error == false){
+        document.getElementById('clientDetailsError').style.visibility = "hidden";
+        document.getElementById('clientDetails').style.display = "none";
+        document.getElementById('checkboxes').style.display = "block";
+        document.getElementById('submit').style.display = "block";
+
+
+        console.log(values);
+    }
 }
 
 //TODO: write getIngredients

@@ -11,17 +11,36 @@
     <div id = 'heading' class = 'centre'>
     <img src=./images/logo.jpg></img>
     <h1>Cocktail Calculator</h1>
+    
+  </div>
+  <div id ='clientDetails'>
+    <h3>Input Client Data</h3>
+    <p class="smallText">* indicates mandatory field</p>
+    <label for="name">Client Name*</label><br>
+    <input type="text" id="name" name="details"><br><br>
+    <label for="address1">1st Line Address*</label><br>
+    <input type="text" id="address1" name="details"><br><br>
+    <label for="address2">2nd Line Address</label><br>
+    <input type="text" id="address2" name="details"><br><br>
+    <label for="city">City*</label><br>
+    <input type="text" id="city" name="details"><br><br>
+    <label for="postcode">Postcode*</label><br>
+    <input type="text" id="postcode" name="details">
+    <div id="clientDetailsBtn">
+      <p id="clientDetailsError" name="error" class="error">Fill in all mandatory fields</p>
+      <button id="clientDetailsBtn" type=""submit" onclick="hideClientDetails()">Next</button>
+    </div>
+  </div>
+  <div id ='checkboxes' class="subsequentPages">
     <h3>Select the cocktails required by the client</h3>
-  </div>
-  <div id ='checkboxes'>
-  <p>
+    <p>
       <button id="checkAllBtn">Check / Uncheck All</button>
-  </p>
+    </p>
   </div>
-  <div id = 'submit'>
-    <p id="emptyArrayError" name="error" class="error";> No cocktails selected</p>
+  <div id = 'submit' class="subsequentPages">
+    <p id="emptyArrayError" name="error" class="error"> No cocktails selected</p>
     <br>
-    <button id="submitBtn" type="submit" onclick="submitCheckboxes()">Go</button>
+    <button id="submitBtn" type="submit" onclick="submitData()">Go</button>
   </div>
 </div>
 <script >

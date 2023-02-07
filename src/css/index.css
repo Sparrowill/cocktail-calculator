@@ -33,4 +33,10 @@ button:hover{
   color: red;
   visibility: hidden;
 }
-  
+.subsequentPages{
+  display: none;
+}
+
+.smallText{
+  font-size: small;
+}
