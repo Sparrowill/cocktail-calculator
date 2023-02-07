@@ -1,9 +1,9 @@
 {
   "name": "cocktail-calculator",
   "productName": "cocktail-calculator",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A shopping list creator for Cocktail Hire",
-  "main": "src/modules/index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",

@@ -4,7 +4,7 @@
 // Functions to augment html functionality
 //////////////////////////////////////////
 // Global variables
-const path = './lists/cocktails.test.json';
+const path = './cocktails.test.json';
 var clientDetails = Object;
 var shoppingList = Object;
 var chosenCocktails = Object;
