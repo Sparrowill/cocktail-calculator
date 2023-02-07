@@ -4,6 +4,8 @@
 // Functions to augment html functionality
 //////////////////////////////////////////
 
+// Global variables
+const path = './lists/cocktails.test.json';
 // getCocktails()
 // 
 // Has no inputs
@@ -11,7 +13,7 @@
 //
 // This function reads in the list 'cocktails.json' and passes it to storeCocktails
 function getCocktails() {
-    fetch('./lists/cocktails.json')
+    fetch(path)
     .then(response => response.json())
     .then(json => storeCocktails(json))
 }
@@ -67,11 +69,11 @@ function createCheckboxes(cocktailNames) {
     });
 }
 
-// submitCheckboxes()
+// submitData())
 // Takes no inputs
 // returns no outputs
 
-// This function takes all the inputted data, and prints them to console
+// This function takes all the inputted cocktails, and prints them to console
 function submitData() {
     
     let checkboxes = document.querySelectorAll('input[name="cocktail"]:checked');
@@ -81,24 +83,239 @@ function submitData() {
     });
     // Error checking for empty array
     if(values.length!=0){
-        console.log(values);  
+        getIngredients(values);  
     } else {
         console.log("ERR");
         document.getElementById('emptyArrayError').style.visibility = "visible"; 
     }
-    
 }
+
+// getIngredients()
+// 
+// Has no inputs
+// returns no outputs
+//
+// This function reads in the list 'cocktails.json' and passes it to storeCocktails
+function getIngredients(names) {
+    fetch(path)
+    .then(response => response.json())
+    .then(json => storeIngredients(json, names))
+}
+
+// storeIngredients()
+// Takes an input of cocktail names and all the cocktail data
+// returns no output
+//
+// This function searches through cocktails.json and deletes members that have't been selected 
+
+function storeIngredients(cocktails, names){
+    const ids = [];
+    let j = 0;
+    for (let i = 0; i < cocktails.Cocktails.length; i++) {
+        if(!names.includes(cocktails.Cocktails[i].name)){
+            delete cocktails.Cocktails[i];
+        }
+        else{
+            ids[j] = cocktails.Cocktails[i].id;
+            j++;
+        }
+    }
+    console.log(cocktails);
+    combineIngredients(cocktails, ids);
+}
+
+// combineIngredients()
+// Takes an input of a trimmed object containing selected cocktails
+// returns no output
+//
+// This function combines the selected ingredients into one list
+function combineIngredients(cocktails, ids){
+    const alcoholList = [];
+    const garnishList = [];
+    const juicesList = [];
+    const mixersList = [];
+    const otherList = [];
+    for (let i = 0; i < ids.length; i++) {
+        const alcohol = cocktails.Cocktails[ids[i]-1].ingredients.alcohol;
+        const garnish = cocktails.Cocktails[ids[i]-1].ingredients.garnish;
+        const juices = cocktails.Cocktails[ids[i]-1].ingredients.juices;
+        const mixers = cocktails.Cocktails[ids[i]-1].ingredients.mixers;
+        const other = cocktails.Cocktails[ids[i]-1].ingredients.other;
+
+        combineAlcohol(alcoholList, alcohol);
+        combineGarnish(garnishList, garnish);
+        combineJuices(juicesList, juices);
+        combineMixers(mixersList, mixers);
+        combineOther(otherList,other);
+    }
+    console.log(alcoholList); 
+    console.log(garnishList); 
+    console.log(juicesList); 
+    console.log(mixersList);
+    console.log(otherList);
+
+    const shoppingList = alcoholList.concat(garnishList, juicesList, mixersList, otherList);
+    console.log(shoppingList);
+}
+
+// combineAlcohol()
+// Takes inputs of the current list of alcohols used, and the alcohols in the new cocktail
+// returns an altered list of alcohols used
+//
+// This function sums volumes of alcohols
+function combineAlcohol(alcoholList, alcohol){
+    // If cocktail uses alcohol
+    if (Object.keys(alcohol[0]).includes("name")){
+        // For all alcohols in recipe
+        for(let j = 0; j < alcohol.length; j++){
+            var duplicate = false;
+            // Iterate through alcohols already used
+            for(let k = 0; k < alcoholList.length; k++){
+                //If duplicate alcohol
+                if(alcoholList[k].name == alcohol[j].name) {
+                    // Add volumes
+                    alcoholList[k].volume += alcohol[j].volume;
+                    duplicate = true;
+                    continue;
+                }
+            }
+            if(!duplicate){alcoholList.push(alcohol[j]);}
+        }
+    }
+    return;
+} 
+
+// combineGarnish()
+// Takes inputs of the current list of garnishes used, and the garnishes in the new cocktail
+// returns an altered list of garnishes used
+//
+// This function sums volumes of garnishes
+function combineGarnish(garnishList, garnish){
+    // If cocktail uses garnish
+    if (Object.keys(garnish[0]).includes("name")){
+        // For all garnishs in recipe
+        for(let j = 0; j < garnish.length; j++){
+            var duplicate = false;
+            // Iterate through garnishs already used
+            for(let k = 0; k < garnishList.length; k++){
+                //If duplicate garnish
+                if(garnishList[k].name == garnish[j].name) {
+                    // Add volumes
+                    garnishList[k].volume += garnish[j].volume;
+                    duplicate = true;
+                    continue;
+                }
+            }
+            if(!duplicate){garnishList.push(garnish[j]);}
+        }
+    }
+    return;
+} 
+
+// combineJuices()
+// Takes inputs of the current list of juices used, and the juices in the new cocktail
+// returns an altered list of juices used
+//
+// This function sums volumes of juices
+function combineJuices(juicesList, juices){
+    // If cocktail uses juices
+    if (Object.keys(juices[0]).includes("name")){
+        // For all juicess in recipe
+        for(let j = 0; j < juices.length; j++){
+            var duplicate = false;
+            // Iterate through juicess already used
+            for(let k = 0; k < juicesList.length; k++){
+                //If duplicate juices
+                if(juicesList[k].name == juices[j].name) {
+                    // Add volumes
+                    juicesList[k].volume += juices[j].volume;
+                    duplicate = true;
+                    continue;
+                }
+            }
+            if(!duplicate){juicesList.push(juices[j]);}
+        }
+    }
+    return;
+} 
+
+// combineMixers()
+// Takes inputs of the current list of mixers used, and the mixers in the new cocktail
+// returns an altered list of mixers used
+//
+// This function sums volumes of mixers
+function combineMixers(mixersList, mixers){
+    // If cocktail uses mixers
+    if (Object.keys(mixers[0]).includes("name")){
+        // For all mixerss in recipe
+        for(let j = 0; j < mixers.length; j++){
+            var duplicate = false;
+            // Iterate through mixerss already used
+            for(let k = 0; k < mixersList.length; k++){
+                //If duplicate mixers
+                if(mixersList[k].name == mixers[j].name) {
+                    // Add volumes
+                    mixersList[k].volume += mixers[j].volume;
+                    duplicate = true;
+                    continue;
+                }
+            }
+            if(!duplicate){mixersList.push(mixers[j]);}
+        }
+    }
+    return;
+} 
+
+// combineOther()
+// Takes inputs of the current list of other used, and the other in the new cocktail
+// returns an altered list of other used
+//
+// This function sums volumes of other
+function combineOther(otherList, other){
+    // If cocktail uses other
+    if (Object.keys(other[0]).includes("name")){
+        // For all others in recipe
+        for(let j = 0; j < other.length; j++){
+            var duplicate = false;
+            // Iterate through others already used
+            for(let k = 0; k < otherList.length; k++){
+                //If duplicate other
+                if(otherList[k].name == other[j].name) {
+                    // Add volumes
+                    otherList[k].volume += other[j].volume;
+                    duplicate = true;
+                    continue;
+                }
+            }
+            if(!duplicate){otherList.push(other[j]);}
+        }
+    }
+    return;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // hideClientDetails()
 // Takes no input
 // Returns no outputs
 //
-// This function collects the client details and stores them in an array
-// This array is then printed to console
+// This function collects the client details and stores them in an object
+// This object is then printed to console
 // The function then moves the page on to selec cocktails required
 
 function hideClientDetails() {
     let details = document.querySelectorAll('input[name="details"]');
-    console.log(details);
     let values = [];
     var error = false;
     details.forEach((detail) => {
@@ -117,14 +334,30 @@ function hideClientDetails() {
         document.getElementById('clientDetails').style.display = "none";
         document.getElementById('checkboxes').style.display = "block";
         document.getElementById('submit').style.display = "block";
-
-
-        console.log(values);
+        const clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10])
+        console.log(clientDetails);
+        //TODO: Store these somewhere
     }
 }
 
-//TODO: write getIngredients
-
+// ClientObject(values)
+//Takes an input of values from the input form
+// returns the object
+//
+// This function is an object constructor
+function ClientObject(names, address1, address2 = null, city, postcode, type, date, start, end, duration, guests){
+    this.name = names;
+    this.address1 = address1;
+    this.address2 = address2;
+    this.city = city;
+    this.postcode = postcode;
+    this.type = type;
+    this.date = date;
+    this.start = start;
+    this.end - end;
+    this.duration = duration;
+    this.guests = guests;
+}
 
 // check()
 // Takes an input of what state to set the checkboxes to. default is true
