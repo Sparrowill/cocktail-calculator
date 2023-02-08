@@ -11,8 +11,11 @@ body {
   margin-right: auto;
   text-align: center;
 }
-img{
+.smallLogo{
   width: 50%;
+}
+.largeLogo{
+  width: 100%;
 }
 button{
   border-color: black;
