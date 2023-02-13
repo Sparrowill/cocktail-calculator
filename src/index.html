@@ -10,36 +10,34 @@
     <div id = 'content'>
     <div id = 'heading' class = 'centre'>
     <img src=./logo.jpg></img>
-    <h1>Cocktail Calculator</h1>
+    <h1 id = 'title'>Cocktail Calculator</h1>
     
   </div>
   <div id ='clientDetails'>
     <h3>Input Client Data</h3>
-    <p class="smallText">* indicates mandatory field</p>
-    <label for="name">Client Name*</label><br>
+    <label for="name">Client Name</label><br>
     <input type="text" id="name" name="details"><br><br>
-    <label for="address1">1st Line Address*</label><br>
+    <label for="address1">1st Line Address</label><br>
     <input type="text" id="address1" name="details"><br><br>
     <label for="address2">2nd Line Address</label><br>
     <input type="text" id="address2" name="details"><br><br>
-    <label for="city">City*</label><br>
+    <label for="city">City</label><br>
     <input type="text" id="city" name="details"><br><br>
-    <label for="postcode">Postcode*</label><br>
+    <label for="postcode">Postcode</label><br>
     <input type="text" id="postcode" name="details"><br><br>
-    <label for="type">Nature of Event*</label><br>
+    <label for="type">Nature of Event</label><br>
     <input type="text" id="type" name="details"><br><br>
-    <label for="date">Date of Event*</label><br>
+    <label for="date">Date of Event</label><br>
     <input type="text" id="date" name="details"><br><br>
-    <label for="start">Start Time*</label><br>
+    <label for="start">Start Time</label><br>
     <input type="text" id="start" name="details"><br><br>
-    <label for="end">End Time*</label><br>
+    <label for="end">End Time</label><br>
     <input type="text" id="end" name="details"><br><br>
-    <label for="duration">Duration (hrs)*</label><br>
+    <label for="duration">Duration (hrs)</label><br>
     <input type="text" id="duration" name="details"><br><br>
-    <label for="guests">Number of Guests*</label><br>
+    <label for="guests">Number of Guests</label><br>
     <input type="text" id="guests" name="details"><br><br>
     <div id="clientDetailsBtn">
-      <p id="clientDetailsError" name="error" class="error">Fill in all mandatory fields</p>
       <button id="clientDetailsBtn" type=""submit" onclick="hideClientDetails()">Next</button>
     </div>
   </div>
@@ -61,6 +59,8 @@
 <script >
   const checkAllBtn = document.querySelector('#checkAllBtn');
   checkAllBtn.onclick = checkAll;
+
+
 </script>
   </body>
   

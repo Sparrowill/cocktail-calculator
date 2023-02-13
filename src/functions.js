@@ -8,6 +8,7 @@ const path = './cocktails.test.json';
 var clientDetails = Object;
 var shoppingList = Object;
 var chosenCocktails = Object;
+
 // getCocktails()
 // 
 // Has no inputs
@@ -82,26 +83,13 @@ function createCheckboxes(cocktailNames) {
 function hideClientDetails() {
     let details = document.querySelectorAll('input[name="details"]');
     let values = [];
-    var error = false;
     details.forEach((detail) => {
-        if (detail.value.length!=0 || detail.id == "address2" ){
-            values.push(detail.value);
-        }
-        else{
-            error = true;
-            console.log("ERR");
-            document.getElementById('clientDetailsError').style.visibility = "visible";
-            return;
-        }
+        values.push(detail.value);
     });
-    if(error == false){
-        document.getElementById('clientDetailsError').style.visibility = "hidden";
         document.getElementById('clientDetails').style.display = "none";
         document.getElementById('checkboxes').style.display = "block";
         document.getElementById('submit').style.display = "block";
         clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10])
-        //TODO: Store these somewhere
-    }
 }
 
 // submitData())
@@ -197,6 +185,7 @@ function combineIngredients(cocktails, ids){
 //
 // This function is temporary, prints object contents to index.html
 function showResults(ids){
+    createPDF(clientDetails.name, clientDetails, chosenCocktails);
     document.getElementById('checkboxes').style.display = "none";
     document.getElementById('submit').style.display = "none";
     document.getElementById('results').insertAdjacentHTML('beforeend',JSON.stringify(shoppingList));
@@ -405,3 +394,7 @@ function uncheckAll() {
 check(false);
 this.onclick = checkAll;
 }
+
+const createPDF = async (title, content, drinks) => {
+  window.versions.pdf(title, content, drinks)
+  }
