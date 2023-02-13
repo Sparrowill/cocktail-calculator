@@ -185,7 +185,7 @@ function combineIngredients(cocktails, ids){
 //
 // This function is temporary, prints object contents to index.html
 function showResults(ids){
-    createPDF(clientDetails.name, clientDetails, chosenCocktails);
+    createPDF(clientDetails.name, clientDetails, ids, chosenCocktails);
     document.getElementById('checkboxes').style.display = "none";
     document.getElementById('submit').style.display = "none";
     document.getElementById('results').insertAdjacentHTML('beforeend',JSON.stringify(shoppingList));
@@ -395,6 +395,6 @@ check(false);
 this.onclick = checkAll;
 }
 
-const createPDF = async (title, content, drinks) => {
-  window.versions.pdf(title, content, drinks)
+const createPDF = async (title, content, numDrinks, drinks) => {
+  window.versions.pdf(title, content, numDrinks, drinks)
   }

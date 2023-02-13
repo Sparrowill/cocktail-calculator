@@ -41,7 +41,7 @@ const createWindow = () => {
   });
   mainWindow.webContents.openDevTools()
 
-  ipcMain.handle('PDF', (event, title, client, drinks) => {generateEventSheetPDF(title, client, drinks)});
+  ipcMain.handle('PDF', (event, title, client, numDrinks, drinks) => {generateEventSheetPDF(title, client, numDrinks, drinks)});
   Menu.setApplicationMenu(menu);
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 };
@@ -71,8 +71,11 @@ app.on('activate', () => {
 
 // generatePDF does blackmagic with listeners to implement JS PDF. Uses object children to write job sheet
 
-function generateEventSheetPDF(title = "event_sheet", client, drinks){
+function generateEventSheetPDF(title, client, numDrinks, drinks){
   const doc = new jsPDF();
+  //TODO: Add Image header
+  //TODO: Format Table to account for merged rows
+  //doc.addImage(img, 'png',10,35,150,35)
   doc.autoTable({
     head: [['','','','','']],
     body: [
@@ -86,10 +89,17 @@ function generateEventSheetPDF(title = "event_sheet", client, drinks){
       ['Times of Event', 'Bar Staff to arrive 1hr before Service Start'],
       ['Service Start Time', client.start],
       ['Service Finish Time', client.end],
-
+      ['Total Service Hours', client.duration],
+      ['Cocktail Selection'],
     ],
   })
-  doc.save(title + ".pdf")
+  //TODO: Format to make this look vaguely similar to table
+  let finalY = doc.lastAutoTable.finalY;
+  for(let i = 0; i < numDrinks.length; i++){
+    doc.text(0,finalY + i*10 ,drinks.Cocktails[numDrinks[i]-1].name);
+  }
+  //TODO: Add Invoice bit below cocktails.
+  doc.save("Event Sheet - " + title + ".pdf")
 }
 
 
