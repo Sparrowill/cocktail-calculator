@@ -14,29 +14,43 @@
     
   </div>
   <div id ='clientDetails'>
-    <h3>Input Client Data</h3>
-    <label for="name">Client Name</label><br>
-    <input type="text" id="name" name="details"><br><br>
-    <label for="address1">1st Line Address</label><br>
-    <input type="text" id="address1" name="details"><br><br>
-    <label for="address2">2nd Line Address</label><br>
-    <input type="text" id="address2" name="details"><br><br>
-    <label for="city">City</label><br>
-    <input type="text" id="city" name="details"><br><br>
-    <label for="postcode">Postcode</label><br>
-    <input type="text" id="postcode" name="details"><br><br>
-    <label for="type">Nature of Event</label><br>
-    <input type="text" id="type" name="details"><br><br>
+    <h3>Input Client Details</h3>
+    <div class="row">
+      <div class="column">
+      <label for="name">Client Name</label><br>
+      <input type="text" id="name" name="details"><br><br>
+      <label for="address1">1st Line Address</label><br>
+      <input type="text" id="address1" name="details"><br><br>
+      <label for="address2">2nd Line Address</label><br>
+      <input type="text" id="address2" name="details"><br><br>
+      <label for="city">City</label><br>
+      <input type="text" id="city" name="details"><br><br>
+      <label for="postcode">Postcode</label><br>
+      <input type="text" id="postcode" name="details"><br><br>
+    </div>
+      <div class="column">
     <label for="date">Date of Event</label><br>
-    <input type="text" id="date" name="details"><br><br>
+    <input type="date" id="date" name="details"><br><br>
     <label for="start">Start Time</label><br>
-    <input type="text" id="start" name="details"><br><br>
+    <input type="time" id="start" name="details"><br><br>
     <label for="end">End Time</label><br>
-    <input type="text" id="end" name="details"><br><br>
+    <input type="time" id="end" name="details"><br><br>
     <label for="duration">Duration (hrs)</label><br>
     <input type="text" id="duration" name="details"><br><br>
+      </div>
+    </div>
+    <br><br>
     <label for="guests">Number of Guests</label><br>
     <input type="text" id="guests" name="details"><br><br>
+    <label for="type">Nature of Event</label><br>
+    <input type="text" id="type" name="details"><br><br>
+    <label for="henGuests">Masterclass?</label><br>
+    <input type="checkbox" id="henGuests" name="details"><br><br>
+
+  </div>
+    
+
+    
     <div id="clientDetailsBtn">
       <button id="clientDetailsBtn" type=""submit" onclick="hideClientDetails()">Next</button>
     </div>

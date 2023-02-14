@@ -2,32 +2,13 @@ const {app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const { jsPDF } = require("jspdf"); // will automatically load the node version
 require("jspdf-autotable");
+const fs = require ('fs')
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
-
-const template = [
-  {
-    label: 'Save As PDF',
-    toolTip: 'Save the current window as a PDF',
-    click: () => {generatePDF()}
-  },
-  { type: 'separator' },
-  { label: 'New Window',
-    toolTip: 'Restart Cocktail Calculator in a new window',
-    click: () => {app.quit(); createWindow()}
-  },
-  { type: 'separator' },
-  { label: 'Dev Tools',
-    toolTip: 'open the Dev Tools menu',
-    click: () => {mainWindow.webContents.openDevTools()}
-}
-]
-
-const menu = Menu.buildFromTemplate(template)
-menu.type = 'window'
 
 const createWindow = () => {
   // Create the browser window.
@@ -42,7 +23,6 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools()
 
   ipcMain.handle('PDF', (event, title, client, numDrinks, drinks) => {generateEventSheetPDF(title, client, numDrinks, drinks)});
-  Menu.setApplicationMenu(menu);
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 };
 
@@ -72,12 +52,28 @@ app.on('activate', () => {
 // generatePDF does blackmagic with listeners to implement JS PDF. Uses object children to write job sheet
 
 function generateEventSheetPDF(title, client, numDrinks, drinks){
-  const doc = new jsPDF();
-  //TODO: Add Image header
-  //TODO: Format Table to account for merged rows
-  //doc.addImage(img, 'png',10,35,150,35)
+  const doc = new jsPDF("portrait","px");
+  var width = doc.internal.pageSize.getWidth();
+  console.log(width);
+  doc.setFont("helvetica");
+  doc.setFontSize(12);
+  //TODO: Format Table to account for merged rows, add individual lines
+  const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
+  imgData = 'data:image/png;base64,' + contents.toString('base64');
+  doc.addImage(imgData,'png',0,0,width,155);
   doc.autoTable({
-    head: [['','','','','']],
+    startY: 120,
+    theme: 'plain',
+    styles: {
+      fontSize: 12
+      },
+    columnStyles: {
+      0: {
+        cellWidth: 120,
+        fillColor: [207,207,207],
+        fontStyle: 'bold'
+      }
+    },
     body: [
       ['Contact', client.name],
       ['Date', client.date],
@@ -86,18 +82,45 @@ function generateEventSheetPDF(title, client, numDrinks, drinks){
       ['', client.city],
       ['Postcode',client.postcode],
       ['Nature of Event', client.type],
-      ['Times of Event', 'Bar Staff to arrive 1hr before Service Start'],
+      ['Times of Event', {content: ['Bar Staff to arrive 1hr before Service Start',], styles: {fontStyle: 'bold'}}],
       ['Service Start Time', client.start],
       ['Service Finish Time', client.end],
-      ['Total Service Hours', client.duration],
+      ['Total Service Hours', {content: [client.duration,], styles: {fillColor: [255,255,0]}}],
+      ['Guests', {content: [client.guests,], styles: {fillColor: [255,255,0]}}],
       ['Cocktail Selection'],
     ],
   })
   //TODO: Format to make this look vaguely similar to table
+
   let finalY = doc.lastAutoTable.finalY;
+  doc.setFillColor('#CFCFCF');
+  doc.rect(30,finalY,120,(numDrinks.length-1)*13,'F')
   for(let i = 0; i < numDrinks.length; i++){
-    doc.text(0,finalY + i*10 ,drinks.Cocktails[numDrinks[i]-1].name);
+    doc.text(152,finalY -5 + i*13 ,drinks.Cocktails[numDrinks[i]-1].name);
   }
+
+
+  doc.autoTable({
+    startY: doc.lastAutoTable.finalY + (numDrinks.length-1)*13,
+    theme: 'plain',
+    styles: {
+      fontSize: 12
+      },
+    columnStyles: {
+      0: {
+        cellWidth: 120,
+        fillColor: [207,207,207],
+        fontStyle: 'bold'
+      }
+    },
+    body: [
+      ['Uniforms', {content: ['White Shirt, Black Trousers or Jeans (NO RIPS), Black Shoes (trainers allowed, but only black'], styles: {fontStyle: 'bold'}}]
+      ['Hen Do Masterclass', {content: ['0',], styles: {fillColor: [255,255,0]}},'£25.00 per person','£' + client.HenGuests*25],
+      ['No. Flair Bartenders', {content: ['0',], styles: {fillColor: [255,255,0]}}],
+      ['No. Cocktail Bartenders',{content: ['0',], styles: {fillColor: [255,255,0]}}],
+    ],
+  })
+
   //TODO: Add Invoice bit below cocktails.
   doc.save("Event Sheet - " + title + ".pdf")
 }

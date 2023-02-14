@@ -80,6 +80,7 @@ function createCheckboxes(cocktailNames) {
 // This object is then printed to console
 // The function then moves the page on to selec cocktails required
 
+//TODO: Sort values out so it still matches input.
 function hideClientDetails() {
     let details = document.querySelectorAll('input[name="details"]');
     let values = [];
@@ -89,7 +90,15 @@ function hideClientDetails() {
         document.getElementById('clientDetails').style.display = "none";
         document.getElementById('checkboxes').style.display = "block";
         document.getElementById('submit').style.display = "block";
-        clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10])
+        // If hen party then guests = hen guests, else no hen guests
+        console.log(values);
+        if (values[11] = 'Yes'){
+            values[11] = values[10];
+        } else{
+            values[11] = '0'
+        }
+        
+        clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10], values[11])
 }
 
 // submitData())
@@ -346,7 +355,7 @@ function combineOther(otherList, other){
 // returns the object
 //
 // This function is an object constructor
-function ClientObject(names, address1, address2 = null, city, postcode, type, date, start, end, duration, guests){
+function ClientObject(names, address1, address2 = null, city, postcode, type, date, start, end, duration, guests, henGuests){
     this.name = names;
     this.address1 = address1;
     this.address2 = address2;
@@ -358,6 +367,7 @@ function ClientObject(names, address1, address2 = null, city, postcode, type, da
     this.end - end;
     this.duration = duration;
     this.guests = guests;
+    this.henGuests = henGuests;
 }
 
 // check()
