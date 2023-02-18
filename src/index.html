@@ -36,24 +36,50 @@
     <label for="end">End Time</label><br>
     <input type="time" id="end" name="details"><br><br>
     <label for="duration">Duration (hrs)</label><br>
-    <input type="text" id="duration" name="details"><br><br>
+    <input type="number" id="duration" name="details"><br><br>
+    <label for="guests">Number of Guests</label><br>
+    <input type="number" id="guests" name="details"><br><br>
       </div>
     </div>
     <br><br>
-    <label for="guests">Number of Guests</label><br>
-    <input type="text" id="guests" name="details"><br><br>
+    <h3>Input Event Details</h3>
+    <div class = 'row'>
+      <div class="column">
     <label for="type">Nature of Event</label><br>
     <input type="text" id="type" name="details"><br><br>
-    <label for="henGuests">Masterclass?</label><br>
+    <label for="flair">No. Flair Bartenders</label><br>
+    <input type="number" value = '0'id="flair" name="details"><br><br>
+    <label for="bartender">No. Cocktail Bartenders</label><br>
+    <input type="number"value = '0' id="bartender" name="details"><br><br>
+    <label for="bars">No. Mobile Bars</label><br>
+    <input type="number" value = '0' id="bars" name="details"><br><br>
+    </div>
+    <div class="column">
+    <label for="henGuests">Hen Do Masterclass?</label><br>
     <input type="checkbox" id="henGuests" name="details"><br><br>
+    <label for="glassware">Charge Glassware?</label><br>
+    <input type="checkbox" id="glassware" name="details"><br><br>
+    <label for="ingredients">Charge Ingredients?</label><br>
+    <input type="checkbox" id="ingredients" name="details"><br><br>
+      </div>
+    </div>
+    <h3>Invoice Tools</h3>
+    <label for="travel">Travel Cost (miles)</label><br>
+    <input type="number" value = '0'id="travel" name="details"><br><br>
+    <label for="number">Extra Cost (£)</label><br>
+    <input type="text" value = '0'id="extra" name="details"><br><br>
+    <label for="discount">Discount (%)</label><br>
+    <input type="number" disabled = 'disabled' id="discount" name="details"><br><br>
 
-  </div>
-    
 
-    
     <div id="clientDetailsBtn">
       <button id="clientDetailsBtn" type=""submit" onclick="hideClientDetails()">Next</button>
     </div>
+
+    
+
+    
+
   </div>
   <div id ='checkboxes' class="subsequentPages">
     <h3>Select the cocktails required by the client</h3>

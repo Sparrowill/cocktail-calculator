@@ -20,7 +20,8 @@
     "csv-parse": "^5.3.4",
     "electron-squirrel-startup": "^1.0.0",
     "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.5.28"
+    "jspdf-autotable": "^3.5.28",
+    "math": "^0.0.3"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.4",
