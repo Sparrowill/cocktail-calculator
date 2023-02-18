@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain } = require('electron');
+const {dialog, app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { jsPDF } = require("jspdf"); // will automatically load the node version
 require("jspdf-autotable");
@@ -174,9 +174,18 @@ function generateEventSheetPDF(title, client, numDrinks, drinks){
       ['Total Cost','','', formatter.format(totalCost)],
     ],
   })
+  /*
+  const options = {
+    defaultPath: app.getPath('documents') + "/Event Sheet - " + title + ".pdf",
+    title: 'Save Job Sheet to Documents'
+  }
+  dialog.showSaveDialog(null, options, (path) => {
+    console.log(path);
 
+  });*/
+  
 
-  doc.save("Event Sheet - " + title + ".pdf")
+  doc.save(app.getPath('documents') + "/Event Sheet - " + title + ".pdf")
 }
 
 
