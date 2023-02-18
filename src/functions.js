@@ -86,7 +86,10 @@ function hideClientDetails() {
     details.forEach((detail) => {
         if(detail.id == 'henGuests' || detail.id == 'ingredients' || detail.id == 'glassware'){
             if (detail.checked == true){
-                detail.value = 'Yes'            }
+                detail.value = 'Yes'
+            }else{
+                detail.value = 'No'
+            }
         }
         values.push(detail.value);
     });

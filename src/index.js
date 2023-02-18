@@ -69,15 +69,16 @@ function generateEventSheetPDF(title, client, numDrinks, drinks){
   bartenderCost = Math.round(client.bartender*client.duration*bartenderRate*100)/100
   barCost = Math.round(client.bars * barRate*100)/100
   travelCost = Math.round(client.travel * travelRate*100)/100
-  glasswareCost = Math.round((glasswareFlat + (client.guests * glasswareRate))*100)/100
+  glasswareCost = 0
   // All the faff to delete the glassware row
   glasswareCol2 = ''
-  glasswareCol3  = 0
+  glasswareCol3  = formatter.format(glasswareCost)
   if (client.bars > 0) {
-    glasswareTitle = 'Glassware required'
+    glasswareTitle = 'Glassware Required'
     glasswareCol1 = client.glassware
     if (client.glassware == 'Yes'){
       glasswareCol2 = formatter.format(glasswareRate) +' per person + ' + formatter.format(glasswareFlat)
+      glasswareCost = Math.round((glasswareFlat + (client.guests * glasswareRate))*100)/100
       glasswareCol3  = formatter.format(glasswareCost)
     }
   } else {
