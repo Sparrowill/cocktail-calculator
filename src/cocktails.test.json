@@ -3,6 +3,7 @@
         {
             "id": 1,
             "name": "Amaretto Sour",
+            "mocktail": "false",
             "description": "Almond Liqueur, Lemon Juice, Sugar and a Maraschino Cherry",
             "ingredients": {
                 "alcohol":[
@@ -42,6 +43,7 @@
         {
             "id": 2,
             "name": "Aperol Spritz",
+            "mocktail": "false",
             "description": "Aperol Liqueur with Soda & Prosecco Served with mixed fruits. A great summer drink",
             "ingredients": {
                 "alcohol":[
@@ -83,6 +85,7 @@
         {
             "id": 3,
             "name": "Aviation",
+            "mocktail": "false",
             "description": "Floral and fresh, Gin and Violet Liqueur shaken over ice, served with a Maraschino Cherry",
             "ingredients": {
                 "alcohol":[
@@ -130,6 +133,7 @@
         {
             "id": 4,
             "name": "Bahama Mama",
+            "mocktail": "true",
             "description": "Totally Tropical! White Rum with Pineapple, Orange, and Passionfruit",
             "ingredients": {
                 "alcohol":[
@@ -181,6 +185,7 @@
         {
             "id": 5,
             "name": "Bellini",
+            "mocktail": "false",
             "description": "Peach with Prosecco. So simple, but it works. ",
             "ingredients": {
                 "alcohol":[
@@ -221,6 +226,7 @@
         {
             "id": 6,
             "name": "Between the Sheets",
+            "mocktail": "false",
             "description": "Brandy, Cointreau, and Lemon. Served up",
             "ingredients": {
                 "alcohol":[
@@ -265,6 +271,7 @@
         {
             "id": 7,
             "name": "Black Russian",
+            "mocktail": "false",
             "description": "Coffee, Cola, and Vodka. A curious combination",
             "ingredients": {
                 "alcohol":[
@@ -305,6 +312,7 @@
         {
             "id": 8,
             "name": "Bramble",
+            "mocktail": "true",
             "description": "Gin, served with a Sugar/Lemon mix & Raspberry to give this Gin drink a sharp initial taste, which then settles as a sweet fresh fruity cocktail. ",
             "ingredients": {
                 "alcohol":[
@@ -349,6 +357,7 @@
         {
             "id": 9,
             "name": "Clover Club",
+            "mocktail": "false",
             "description": " From Philadelphia in the late 1800s, a smooth gin-based cocktail. Served in a coupette.",
             "ingredients": {
                 "alcohol":[
@@ -400,6 +409,7 @@
         {
             "id": 10,
             "name": "Cosmopolitan",
+            "mocktail": "false",
             "description": "A Posh Vodka & Cranberry, served in a martini glass with Orange Liqueur & a burnt zest of Orange peel to garnish.",
             "ingredients": {
                 "alcohol":[
@@ -449,6 +459,7 @@
         {
             "id": 11,
             "name": "Cuba Libre",
+            "mocktail": "false",
             "description": "“Free Cuba” a Rum, with coke, a squeeze of lime to finish",
             "ingredients": {
                 "alcohol":[

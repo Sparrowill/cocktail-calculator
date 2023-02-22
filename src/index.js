@@ -2,7 +2,10 @@ const {dialog, app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { jsPDF } = require("jspdf"); // will automatically load the node version
 require("jspdf-autotable");
-const fs = require ('fs')
+const fs = require ('fs');
+require("./Tahoma-Regular-font-normal");
+require("./tahoma-bold");
+
 
 const formatter = new Intl.NumberFormat('en-GB', {
     style: 'currency',
@@ -57,6 +60,7 @@ app.on('activate', () => {
 // generatePDF does blackmagic with listeners to implement JS PDF. Uses object children to write job sheet
 
 function generateEventSheetPDF(title, client, numDrinks, drinks){
+  // Maths for invoice
   henRate = 25
   flairRate = 72.50
   bartenderRate = 52.50
@@ -95,12 +99,11 @@ function generateEventSheetPDF(title, client, numDrinks, drinks){
 
   totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + client.extra)*100)/100
  
+  //PDF library to create event sheet
   const doc = new jsPDF("portrait","px","a4");
   var width = doc.internal.pageSize.getWidth();
-  console.log(width);
-  doc.setFont("helvetica");
+  doc.setFont('Tahoma')
   doc.setFontSize(12);
-  //TODO: Format Table to account for merged rows, add individual lines
   const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
   imgData = 'data:image/png;base64,' + contents.toString('base64');
   doc.addImage(imgData,'png',0,0,width,155);
@@ -174,20 +177,43 @@ function generateEventSheetPDF(title, client, numDrinks, drinks){
       ['Total Cost','','', formatter.format(totalCost)],
     ],
   })
-  /*
-  const options = {
-    defaultPath: app.getPath('documents') + "/Event Sheet - " + title + ".pdf",
-    title: 'Save Job Sheet to Documents'
-  }
-  dialog.showSaveDialog(null, options, (path) => {
-    console.log(path);
-
-  });*/
-  
-
   doc.save(app.getPath('documents') + "/Event Sheet - " + title + ".pdf")
+  generateEventMenu(title, client, numDrinks, drinks)
 }
 
 
 
+function generateEventMenu(title, client, numDrinks, drinks){
+  console.log(drinks)
+  console.log(numDrinks)
+  const doc = new jsPDF("portrait","px","a4");
+  var width = doc.internal.pageSize.getWidth();
+  doc.setFont('Tahoma', 'bold')
+  doc.setFontSize(15);
+  const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
+  imgData = 'data:image/png;base64,' + contents.toString('base64');
+  doc.addImage(imgData,'png',0,0,width,155);
+  let j = 0
+  for(let i =0; i<numDrinks.length; i++){
+    doc.setFontSize(30);
+    doc.setFont('Tahoma','bold');
+    doc.text(drinks.Cocktails[numDrinks[i]-1].name,width/2,160 + j,{ maxWidth: width-20,align:'center'})
+    if(drinks.Cocktails[numDrinks[i]-1].mocktail == 'true'){
+      j+=13
+      doc.setFontSize(13);
+      doc.setFont('Tahoma' ,'bold');
+      doc.text('(This can also be made non-alcoholic)',width/2,160 + j,{maxWidth: width-20,align:'center'})
+      j+=15
+    } else{
+      j+=20
+    }
+    
+    doc.setFontSize(15);
+    doc.setFont('Tahoma' ,'normal');
+    doc.text(drinks.Cocktails[numDrinks[i]-1].description,width/2,160 + j,{maxWidth: width-20,align:'center'})
+    j+=40
+    
+  }
+  doc.save(app.getPath('documents') + "/Cocktail Menu - " + title + ".pdf")
+}
 
