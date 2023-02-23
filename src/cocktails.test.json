@@ -222,7 +222,6 @@
                     ]
             }
         },
-        
         {
             "id": 6,
             "name": "Between the Sheets",
@@ -496,6 +495,647 @@
                     }
                     ]
             }
+        },
+        {
+            "id": 12,
+            "name": "Dark & Stormy",
+            "mocktail": "false",
+            "description": "Rum, with Ginger Beer, a touch of Lime and a shake of Angostura Bitters",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"dark rum",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        
+                    }
+
+                ],
+                "mixers":[
+                    {
+                        "name": "ginger beer",
+                        "volume": 75,
+                        "unit": "ml"
+                    }
+                ],
+                "garnish":[
+                    {
+                      "name": "lime slice",
+                      "volume": 1,
+                      "unit": "pcs"
+                    }
+
+                ],
+                "other":[
+                    {
+                        "name": "angostura bitters",
+                        "volume": 1,
+                        "unit": "dash"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 13,
+            "name": "Espresso Martini",
+            "mocktail": "false",
+            "description": "This is the Vodka & Energy drink for Connoisseur, with coffee instead of the energy stuff in the cans.",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"vodka",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"coffee liqueur",
+                        "volume": 15,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        
+                    }
+
+                ],
+                "mixers":[
+                    {
+                        "name": "coffee mix",
+                        "volume": 50,
+                        "unit": "ml"
+                    }
+                ],
+                "garnish":[
+                    {
+
+                    }
+
+                ],
+                "other":[
+                    {
+                        "name": "sugar",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 14,
+            "name": "French 75",
+            "mocktail": "false",
+            "description": "Champagne Cocktail, it's basically a Gin Sour, topped with Champagne as opposed to soda, then served in a champagne flute ",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"gin",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"prosecco",
+                        "volume": 50,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[                       
+                    {
+                         "name":"lemon juice",
+                        "volume": 15,
+                        "unit": "ml"
+                    }    
+                ],
+                "mixers":[
+                    {
+                       
+                    }
+                ],
+                "garnish":[
+                    {
+
+                    }
+
+                ],
+                "other":[
+                    {
+                        "name": "sugar",
+                        "volume": 15,
+                        "unit": "ml"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 15,
+            "name": "Gin & Tonic",
+            "mocktail": "false",
+            "description": "Gin with Tonic Water, garnished with Lemon or Lime ",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"gin",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+
+                    }
+                ],
+                "mixers":[
+                    {
+                        "name": "tonic water",
+                        "volume": 100,
+                        "unit": "ml"
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name": "lemon slice",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+                        
+                    }
+                ]
+            }
+        },
+        {
+            "id": 16,
+            "name": "Green Garden",
+            "mocktail": "true",
+            "description": "Gin, with Elderflower cordial, Apple Juice & lots of fresh mint, with a touch of Ginger beer",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"gin",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"cloudy apple juice",
+                        "volume": 50,
+                        "unit": "ml"
+                    }
+                ],
+                "mixers":[
+                    {
+                        "name": "ginger beer",
+                        "volume": 10,
+                        "unit": "ml"
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name": "mint leaves",
+                        "volume": 10,
+                        "unit": "g"
+                    }
+                ],
+                "other":[
+                    {
+                        "name": "elderflower cordial",
+                        "volume": 15,
+                        "unit": "ml"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 17,
+            "name": "Long Island Iced Tea",
+            "mocktail": "false",
+            "description": "That one everyone knows as the drink with a bit of everything. Vodka, Triple Sec/Cointreau, Rum, Gin, a touch of Lemon Juice, all brought together with Cola ",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"vodka",
+                        "volume": 12.5,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"gin",
+                        "volume": 12.5,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"white rum",
+                        "volume": 12.5,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"cointreau",
+                        "volume": 12.5,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"lemon juice",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                ],
+                "mixers":[
+                    {
+                        "name": "cola",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name": "lemon slice",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+
+                    }
+                ]
+            }
+        },
+        {
+            "id": 18,
+            "name": "Lychee Martini",
+            "mocktail": "true",
+            "description": "Vodka, with Lychee Juice, Lychee Liqueur shaken & served straight up in a Coupette.",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"vodka",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"lychee liqueur",
+                        "volume": 15,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"lychee juice",
+                        "volume": 50,
+                        "unit": "ml"
+                    }
+                ],
+                "mixers":[
+                    {
+                       
+                    }
+                ],
+                "garnish":[
+                    {
+                        
+                    }
+                ],
+                "other":[
+                    {
+
+                    }
+                ]
+            }
+        },
+        {
+            "id": 19,
+            "name": "Mai Tai",
+            "mocktail": "false",
+            "description": "There are so many recipes, in short & simple terms. Its White Rum, Dark Rum, Lime, with Almond flavour & Pineapple.",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"white rum",
+                        "volume": 25,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"dark rum",
+                        "volume": 15,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"pineapple juice",
+                        "volume": 50,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"lime juice",
+                        "volume": 12.5,
+                        "unit": "ml"
+                    }
+                ],
+                "mixers":[
+                    {
+                       
+                    }
+                ],
+                "garnish":[
+                    {
+                      "name": "pineapple slice",
+                      "volume": 1,
+                      "unit": "pcs"
+
+                    }
+                ],
+                "other":[
+                    {
+                        "name":"orgeat syrup",
+                        "volume": 5,
+                        "unit": "ml"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 20,
+            "name": "Margarita",
+            "mocktail": "false",
+            "description": "Tequila, with Dry Orange Liqueur & Lime Juice, we serve our Margaritas without Salt, If you need it, just ask. ",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"tequila",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"cointreau",
+                        "volume": 15,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"lime juice",
+                        "volume": 50,
+                        "unit": "ml"
+                    }
+                ],
+                "mixers":[
+                    {
+                       
+                    }
+                ],
+                "garnish":[
+                    {
+                      "name": "lime slice",
+                      "volume": 1,
+                      "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+                    
+                    }
+                ]
+            }
+        },
+        {
+            "id": 21,
+            "name": "Mojito",
+            "mocktail": "true",
+            "description": "Classic Cocktail made of Rum, Lime, Mint & Sugar, all brought down with Soda water",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"white rum",
+                        "volume": 40,
+                        "unit": "ml"
+                    }                  
+                ],
+                "juices":[
+                    {
+                        "name":"lime juice",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                ],
+                "mixers":[
+                    {
+                        "name":"soda water",
+                        "volume": 50,
+                        "unit": "ml"
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name":"mint leaves",
+                        "volume": 10,
+                        "unit": "g"
+                    }
+                ],
+                "other":[
+                    {
+                        "name":"sugar",
+                        "volume": 25,
+                        "unit": "ml"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 22,
+            "name": "Negroni",
+            "mocktail": "true",
+            "description": "A Stirred mix of Campari, Gin & Sweet Vermouth diluted with plenty of ice & served with a touch of bitters & an Orange peel",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"red vermouth",
+                        "volume": 15,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"campari",
+                        "volume": 20,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"gin",
+                        "volume": 20,
+                        "unit": "ml"
+                    }                  
+                ],
+                "juices":[
+                    {
+                      
+                    }
+                ],
+                "mixers":[
+                    {
+                        
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name":"orange zest",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+                    
+                    }
+                ]
+            }
+        },
+        {
+            "id": 23,
+            "name": "Old Fashioned",
+            "mocktail": "false",
+            "description": "It’s Whisky, diluted over a touch of ice, with a little sweetness added, an orange zest & some angostura bitters. ",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"whisky",
+                        "volume": 50,
+                        "unit": "ml"
+                    }        
+                ],
+                "juices":[
+                    {
+                      
+                    }
+                ],
+                "mixers":[
+                    {
+                        
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name":"orange zest",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+                        "name": "sugar",
+                        "volume": 10,
+                        "unit": "pcs"
+                    },
+                    {
+                        "name": "angostura bitters",
+                        "volume": 1,
+                        "unit": "dash"
+                    }
+                ]
+            }            
+        },
+        {
+            "id": 24,
+            "name": "Piña Colada",
+            "mocktail": "true",
+            "description": "Rum, with Coconut, Pineapple & a touch of cream",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"white rum",
+                        "volume": 35,
+                        "unit": "ml"
+                    }        
+                ],
+                "juices":[
+                    {
+                        "name":"pineapple juice",
+                        "volume": 50,
+                        "unit": "ml" 
+                    }
+                ],
+                "mixers":[
+                    {
+                        
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name":"pineapple slice",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+                        "name": "coconut milk",
+                        "volume": 10,
+                        "unit": "ml"
+                    }
+                ]
+            }            
+        },
+        {
+            "id": 25,
+            "name": "Pornstar Martini",
+            "mocktail": "true",
+            "description": "Passion Fruit with Vanilla, Vodka & Prosecco",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"vodka",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"passoa passionfruit liqueur",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"prosecco",
+                        "volume": 25,
+                        "unit": "ml"
+                    }               
+                ],
+                "juices":[
+                    {
+                        "name":"pineapple juice",
+                        "volume": 35,
+                        "unit": "ml" 
+                    },
+                    {
+                        "name":"passionfruit puree",
+                        "volume": 35,
+                        "unit": "ml" 
+                    }
+                ],
+                "mixers":[
+                    {
+                        
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name":"passionfruit half",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+                        "name": "vanilla extract",
+                        "volume": 5,
+                        "unit": "ml"
+                    }
+                ]
+            }            
         }
     ]
 }

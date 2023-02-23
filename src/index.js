@@ -184,25 +184,34 @@ function generateEventSheetPDF(title, client, numDrinks, drinks){
 
 
 function generateEventMenu(title, client, numDrinks, drinks){
-  console.log(drinks)
-  console.log(numDrinks)
   const doc = new jsPDF("portrait","px","a4");
   var width = doc.internal.pageSize.getWidth();
   doc.setFont('Tahoma', 'bold')
   doc.setFontSize(15);
   const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
   imgData = 'data:image/png;base64,' + contents.toString('base64');
-  doc.addImage(imgData,'png',0,0,width,155);
+  // IF too many drinks, remove logo
+  var height = 0
+  if (numDrinks<8){
+    height = 155
+    doc.addImage(imgData,'png',0,0,width,height);
+  } else{
+    height = 50
+    doc.setFontSize(30)
+    doc.text("COCKTAIL HIRE", width/2,height,{align:'center'})
+    height = 85
+  }
+
   let j = 0
   for(let i =0; i<numDrinks.length; i++){
-    doc.setFontSize(30);
+    doc.setFontSize(17);
     doc.setFont('Tahoma','bold');
-    doc.text(drinks.Cocktails[numDrinks[i]-1].name,width/2,160 + j,{ maxWidth: width-20,align:'center'})
+    doc.text(drinks.Cocktails[numDrinks[i]-1].name,width/2,height + j,{ maxWidth: width-20,align:'center'})
     if(drinks.Cocktails[numDrinks[i]-1].mocktail == 'true'){
       j+=13
-      doc.setFontSize(13);
+      doc.setFontSize(11);
       doc.setFont('Tahoma' ,'bold');
-      doc.text('(This can also be made non-alcoholic)',width/2,160 + j,{maxWidth: width-20,align:'center'})
+      doc.text('(This can also be made non-alcoholic)',width/2,height + j,{maxWidth: width-20,align:'center'})
       j+=15
     } else{
       j+=20
@@ -210,8 +219,8 @@ function generateEventMenu(title, client, numDrinks, drinks){
     
     doc.setFontSize(15);
     doc.setFont('Tahoma' ,'normal');
-    doc.text(drinks.Cocktails[numDrinks[i]-1].description,width/2,160 + j,{maxWidth: width-20,align:'center'})
-    j+=40
+    doc.text(drinks.Cocktails[numDrinks[i]-1].description,width/2,height + j,{maxWidth: width-80,align:'center'})
+    j+=45
     
   }
   doc.save(app.getPath('documents') + "/Cocktail Menu - " + title + ".pdf")

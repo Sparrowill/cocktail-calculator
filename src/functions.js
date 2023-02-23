@@ -47,6 +47,7 @@ function storeCocktails(cocktails) {
 function createCheckboxes(cocktailNames) {
     // define cocktails and sort alphabetically
     const cocktails = cocktailNames.sort();
+    var count = 0
     cocktails.forEach((cocktail)=>{
         //  generate id
         const id = `cocktail-${cocktail}`;
@@ -54,7 +55,7 @@ function createCheckboxes(cocktailNames) {
         // create a label
         const label = document.createElement('label');
         label.setAttribute("for", id);
-       
+        
         // create a checkbox
         const checkbox = document.createElement('input');
         checkbox.type = "checkbox";
@@ -67,8 +68,14 @@ function createCheckboxes(cocktailNames) {
         // create text node
         label.appendChild(document.createTextNode(cocktail));
         // add the label to the appropriate div
-        document.getElementById('checkboxes').appendChild(label);
-        document.getElementById('checkboxes').appendChild(document.createElement("br"));
+        if(count<(cocktails.length/2)){
+            document.getElementById('checkboxes1').appendChild(label);
+            document.getElementById('checkboxes1').appendChild(document.createElement("br"));
+        } else {
+            document.getElementById('checkboxes2').appendChild(label);
+            document.getElementById('checkboxes2').appendChild(document.createElement("br"));
+        }
+        count++
     });
 }
 
@@ -116,18 +123,23 @@ function hideClientDetails() {
 
 // This function takes all the inputted cocktails, and prints them to console
 function submitData() {
-    
+    document.getElementById('overflowError').style.visibility = "hidden"; 
+    document.getElementById('emptyArrayError').style.visibility = "hidden"; 
+
     let checkboxes = document.querySelectorAll('input[name="cocktail"]:checked');
     let values = [];
     checkboxes.forEach((checkbox) => {
         values.push(checkbox.value);
     });
     // Error checking for empty array
-    if(values.length!=0){
+    if(values.length>0 && values.length<9){
         getIngredients(values);  
-    } else {
+    } else if(values.length == 0) {
         console.log("ERR");
         document.getElementById('emptyArrayError').style.visibility = "visible"; 
+    } else {
+        console.log("ERR");
+        document.getElementById('overflowError').style.visibility = "visible";
     }
 }
 

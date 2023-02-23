@@ -75,20 +75,20 @@
     <div id="clientDetailsBtn">
       <button id="clientDetailsBtn" type=""submit" onclick="hideClientDetails()">Next</button>
     </div>
-
-    
-
-    
-
   </div>
   <div id ='checkboxes' class="subsequentPages">
     <h3>Select the cocktails required by the client</h3>
     <p>
       <button id="checkAllBtn">Check / Uncheck All</button>
     </p>
+    <div class="row">
+    <div class="column" id ='checkboxes1'></div>
+    <div class="column" id ='checkboxes2'></div>
+  </div>
   </div>
   <div id = 'submit' class="subsequentPages">
     <p id="emptyArrayError" name="error" class="error"> No cocktails selected</p>
+    <p id="overflowError" name="error" class="error"> Select up to 8 cocktails</p>
     <br>
     <button id="submitBtn" type="submit" onclick="submitData()">Go</button>
   </div>
