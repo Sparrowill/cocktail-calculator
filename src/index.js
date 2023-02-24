@@ -27,9 +27,9 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
-  ipcMain.handle('PDF', (event, title, client, numDrinks, drinks) => {generateEventSheetPDF(title, client, numDrinks, drinks)});
+  ipcMain.handle('PDF', (event, title, client, numDrinks, drinks, options) => {generateDocs(title, client, numDrinks, drinks, options)});
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 };
 
@@ -59,7 +59,32 @@ app.on('activate', () => {
 
 // generatePDF does blackmagic with listeners to implement JS PDF. Uses object children to write job sheet
 
-function generateEventSheetPDF(title, client, numDrinks, drinks){
+function generateDocs(title, client, numDrinks, drinks, options){
+  
+  if (options == 1) {
+    generateEventSheetPDF(title, client, numDrinks, drinks)
+    generateEventMenu(title, numDrinks, drinks)
+    generateShoppingList(title, client, numDrinks, drinks)
+  }
+  else if (options == 2) {
+    generateEventSheetPDF(title, client, numDrinks, drinks)
+  }
+  else if (options == 3) {
+    generateEventMenu(title, numDrinks, drinks)
+  }
+  else if (options == 4) {
+    generateShoppingList(title, client, numDrinks, drinks)
+  }
+  else if (options == 5) {
+    app.relaunch();
+    app.quit();
+    
+  } else{
+    console.log("ERR: Options != 1-5, got ", options)
+  }
+ 
+}
+function generateEventSheetPDF(title, client, numDrinks, drinks, options){
   // Maths for invoice
   henRate = 25
   flairRate = 72.50
@@ -177,13 +202,11 @@ function generateEventSheetPDF(title, client, numDrinks, drinks){
       ['Total Cost','','', formatter.format(totalCost)],
     ],
   })
-  doc.save(app.getPath('documents') + "/Event Sheet - " + title + ".pdf")
-  generateEventMenu(title, client, numDrinks, drinks)
+  saveDoc(doc, "Event Sheet", title )
+
 }
 
-
-
-function generateEventMenu(title, client, numDrinks, drinks){
+function generateEventMenu(title, numDrinks, drinks){
   const doc = new jsPDF("portrait","px","a4");
   var width = doc.internal.pageSize.getWidth();
   doc.setFont('Tahoma', 'bold')
@@ -192,7 +215,7 @@ function generateEventMenu(title, client, numDrinks, drinks){
   imgData = 'data:image/png;base64,' + contents.toString('base64');
   // IF too many drinks, remove logo
   var height = 0
-  if (numDrinks<8){
+  if (numDrinks.length<8){
     height = 155
     doc.addImage(imgData,'png',0,0,width,height);
   } else{
@@ -223,6 +246,35 @@ function generateEventMenu(title, client, numDrinks, drinks){
     j+=45
     
   }
-  doc.save(app.getPath('documents') + "/Cocktail Menu - " + title + ".pdf")
+  saveDoc(doc, "Cocktail Menu", title )
 }
 
+function generateShoppingList(title, numDrinks, drinks){
+  const doc = new jsPDF("portrait","px","a4");
+  var width = doc.internal.pageSize.getWidth();
+  doc.setFont('Tahoma')
+  doc.setFontSize(10);
+  doc.text("There needs to be a shopping list here eventually eh?", 20,20)
+  //TODO: All the tricky bits
+  saveDoc(doc, "Shopping List", title )
+}
+
+
+const saveDoc = async (doc, type, title) => {
+  let settings = {
+    title: 'Save ' + type + ' As...',
+    defaultPath: app.getPath('documents') + "/" + type + " - " + title +" .pdf",
+    //buttonLabel: 'Save ' + type ,
+    filters: [
+      {name: 'pdf Files', extensions: ['pdf'] },
+      {name: 'All Files', extensions: ['*'] }
+    ],
+    message: type + " - " + title + ".pdf",
+    properties: ['createDirectory']
+  }
+  const saveWindow = await dialog.showSaveDialog(BrowserWindow.getFocusedWindow(), settings)
+    if(saveWindow.cancelled){
+    }else {
+      doc.save(saveWindow.filePath)
+    }
+}

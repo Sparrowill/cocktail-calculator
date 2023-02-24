@@ -55,3 +55,6 @@ button:hover{
   display: table;
   clear: both;
 }
+.results{
+  display: none;
+}

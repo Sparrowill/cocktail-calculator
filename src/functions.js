@@ -8,6 +8,7 @@ const path = './cocktails.test.json';
 var clientDetails = Object;
 var shoppingList = Object;
 var chosenCocktails = Object;
+var ids = [];
 
 // getCocktails()
 // 
@@ -110,6 +111,9 @@ function hideClientDetails() {
     flair, bartender, bars, henGuests, glassware, ingredients, travel, extra, discount){*/ 
         clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10], values[11], values[12],
             values[13], values[14], values[15],values[16], values[17], values[18], values[19] )
+        if(clientDetails.name == ''){
+            clientDetails.name = 'John Smith'
+        }
         if(clientDetails.henGuests == 'Yes'){
             clientDetails.henGuests = clientDetails.guests
         } else{
@@ -133,6 +137,8 @@ function submitData() {
     });
     // Error checking for empty array
     if(values.length>0 && values.length<9){
+        document.getElementById('checkboxes').style.display = "none";
+        document.getElementById('submit').style.display = "none";
         getIngredients(values);  
     } else if(values.length == 0) {
         console.log("ERR");
@@ -162,7 +168,6 @@ function getIngredients(names) {
 // This function searches through cocktails.json and deletes members that have't been selected 
 
 function storeIngredients(cocktails, names){
-    const ids = [];
     let j = 0;
     for (let i = 0; i < cocktails.Cocktails.length; i++) {
         if(!names.includes(cocktails.Cocktails[i].name)){
@@ -203,36 +208,22 @@ function combineIngredients(cocktails, ids){
     }
 
     shoppingList = alcoholList.concat(garnishList, juicesList, mixersList, otherList);
+    document.getElementById('results').style.display = "block";
     console.log(shoppingList);
     console.log(clientDetails);
     console.log(chosenCocktails);
-    showResults(ids);
 }
 
-// showResults()
-// Takes input of ids to get number of chosen cocktails also (uses globals)
-//retuns no outputs
+// generateDocuments(options)
+// Takes input of option of what to do, decoded in index.js
+// Returns nothing
 //
-// This function is temporary, prints object contents to index.html
-function showResults(ids){
-    createPDF(clientDetails.name, clientDetails, ids, chosenCocktails);
-    document.getElementById('checkboxes').style.display = "none";
-    document.getElementById('submit').style.display = "none";
-    document.getElementById('results').insertAdjacentHTML('beforeend',JSON.stringify(shoppingList));
-    document.getElementById('results').appendChild(document.createElement("br"));
-    document.getElementById('results').appendChild(document.createElement("br"));
-    document.getElementById('results').insertAdjacentHTML('beforeend',JSON.stringify(clientDetails));
-    document.getElementById('results').appendChild(document.createElement("br"));
-    document.getElementById('results').appendChild(document.createElement("br"));
-
-    for(let i = 0; i < ids.length; i++){
-        document.getElementById('results').insertAdjacentHTML('beforeend',chosenCocktails.Cocktails[ids[i]-1].description);
-        document.getElementById('results').appendChild(document.createElement("br"));
-        document.getElementById('results').appendChild(document.createElement("br"));
-
-
-    }
-}   
+// Handler for passing html inputs to node js
+//
+function generateDocuments(options) {
+    console.log("generateDocuments")
+    createPDF(clientDetails.name, clientDetails, ids, chosenCocktails, options);
+}
 
 
 // combineAlcohol()C
@@ -435,6 +426,6 @@ check(false);
 this.onclick = checkAll;
 }
 
-const createPDF = async (title, content, numDrinks, drinks) => {
-  window.versions.pdf(title, content, numDrinks, drinks)
+const createPDF = async (title, content, numDrinks, drinks, options) => {
+  window.versions.pdf(title, content, numDrinks, drinks, options)
   }
