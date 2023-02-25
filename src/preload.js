@@ -8,7 +8,7 @@ contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
-  pdf: (title, content, numDrinks, drinks, options) => ipcRenderer.invoke('PDF', title, content, numDrinks, drinks, options),
+  pdf: (title, content, numDrinks, drinks, options, shoppingList) => ipcRenderer.invoke('PDF', title, content, numDrinks, drinks, options, shoppingList),
   // we can also expose variables, not just functions
 })
 

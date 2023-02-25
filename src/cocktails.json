@@ -26,7 +26,7 @@
                 ],
                 "garnish":[
                     {
-                        "name":"cherry",
+                        "name":"Cocktail Cherries",
                         "volume": 1,
                         "unit": "pcs"
                     }
@@ -44,7 +44,7 @@
             "id": 2,
             "name": "Aperol Spritz",
             "mocktail": "false",
-            "description": "Aperol Liqueur with Soda & Prosecco Served with mixed fruits. A great summer drink",
+            "description": "Aperol Liqueur with Soda & Prosecco Served with fruit. A great summer drink",
             "ingredients": {
                 "alcohol":[
                     {
@@ -71,8 +71,8 @@
                 ],
                 "garnish":[
                     {
-                        "name":"orange slice",
-                        "volume": 1,
+                        "name":"orange",
+                        "volume": 0.1,
                         "unit": "pcs"
                     }
                     ],
@@ -95,7 +95,7 @@
                         "unit": "ml"
                     },
                     {
-                        "name":"creme de violetta",
+                        "name":"crème de violetta",
                         "volume":15,
                         "unit": "ml"
                     }
@@ -118,7 +118,7 @@
                 ],
                 "garnish":[
                     {
-                        "name":"cherry",
+                        "name":"cocktail cherries",
                         "volume": 1,
                         "unit": "pcs"
                     }
@@ -209,7 +209,7 @@
                 ],
                 "garnish":[
                     {
-                        "name":"cherry",
+                        "name":"Cocktail Cherries",
                         "volume": 1,
                         "unit": "pcs"
                     }
@@ -292,7 +292,9 @@
                     ],
                 "mixers":[
                     {
-
+                        "name":"cola",
+                        "volume": 50,
+                        "unit": "ml"
                     }
                 ],
                 "garnish":[
@@ -442,8 +444,8 @@
                 ],
                 "garnish":[
                     {
-                      "name": "orange slice",
-                      "volume": 1,
+                      "name": "orange",
+                      "volume": 0.1,
                       "unit": "pcs"
                     }
 
@@ -565,7 +567,7 @@
                 ],
                 "mixers":[
                     {
-                        "name": "coffee mix",
+                        "name": "nescafe azera",
                         "volume": 50,
                         "unit": "ml"
                     }
@@ -984,8 +986,8 @@
                 ],
                 "garnish":[
                     {
-                        "name":"orange zest",
-                        "volume": 1,
+                        "name":"orange",
+                        "volume": 0.1,
                         "unit": "pcs"
                     }
                 ],
@@ -1000,7 +1002,7 @@
             "id": 23,
             "name": "Old Fashioned",
             "mocktail": "false",
-            "description": "It’s Whisky, diluted over a touch of ice, with a little sweetness added, an orange zest & some angostura bitters. ",
+            "description": "It’s Whisky, diluted over a touch of ice, with a little sweetness added, an orange & some angostura bitters. ",
             "ingredients": {
                 "alcohol":[
                     {
@@ -1021,8 +1023,8 @@
                 ],
                 "garnish":[
                     {
-                        "name":"orange zest",
-                        "volume": 1,
+                        "name":"orange",
+                        "volume": 0.1,
                         "unit": "pcs"
                     }
                 ],
@@ -1094,7 +1096,7 @@
                         "unit": "ml"
                     },
                     {
-                        "name":"passoa passionfruit liqueur",
+                        "name":"passoa",
                         "volume": 35,
                         "unit": "ml"
                     },
@@ -1123,7 +1125,7 @@
                 ],
                 "garnish":[
                     {
-                        "name":"passionfruit half",
+                        "name":"passionfruit",
                         "volume": 1,
                         "unit": "pcs"
                     }

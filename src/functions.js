@@ -4,7 +4,7 @@
 // Functions to augment html functionality
 //////////////////////////////////////////
 // Global variables
-const path = './cocktails.test.json';
+const path = './cocktails.json';
 var clientDetails = Object;
 var shoppingList = Object;
 var chosenCocktails = Object;
@@ -114,6 +114,12 @@ function hideClientDetails() {
         if(clientDetails.name == ''){
             clientDetails.name = 'John Smith'
         }
+        if(clientDetails.duration == ''){
+            clientDetails.duration = 1
+        }
+        if(clientDetails.guests == ''){
+            clientDetails.guests = 1
+        }
         if(clientDetails.henGuests == 'Yes'){
             clientDetails.henGuests = clientDetails.guests
         } else{
@@ -136,7 +142,7 @@ function submitData() {
         values.push(checkbox.value);
     });
     // Error checking for empty array
-    if(values.length>0 && values.length<9){
+    if(values.length>0 && values.length<100){
         document.getElementById('checkboxes').style.display = "none";
         document.getElementById('submit').style.display = "none";
         getIngredients(values);  
@@ -222,7 +228,7 @@ function combineIngredients(cocktails, ids){
 //
 function generateDocuments(options) {
     console.log("generateDocuments")
-    createPDF(clientDetails.name, clientDetails, ids, chosenCocktails, options);
+    createPDF(clientDetails.name, clientDetails, ids, chosenCocktails, options, shoppingList);
 }
 
 
@@ -426,6 +432,6 @@ check(false);
 this.onclick = checkAll;
 }
 
-const createPDF = async (title, content, numDrinks, drinks, options) => {
-  window.versions.pdf(title, content, numDrinks, drinks, options)
+const createPDF = async (title, content, numDrinks, drinks, options, shoppingList) => {
+  window.versions.pdf(title, content, numDrinks, drinks, options, shoppingList)
   }

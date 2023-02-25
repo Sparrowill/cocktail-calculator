@@ -1032,6 +1032,13 @@ dompurify@^2.2.0:
   resolved "https://registry.npmjs.org/dompurify/-/dompurify-2.4.4.tgz"
   integrity sha512-1e2SpqHiRx4DPvmRuXU5J0di3iQACwJM+mFGE2HAkkK7Tbnfk9WcghcAmyWc9CRrjyRRUpmuhPUH6LphQQR3EQ==
 
+electron-fetch@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.npmjs.org/electron-fetch/-/electron-fetch-1.9.1.tgz"
+  integrity sha512-M9qw6oUILGVrcENMSRRefE1MbHPIz0h79EKIeJWK9v563aT9Qkh8aEHPO1H5vi970wPirNY+jO9OpFoLiMsMGA==
+  dependencies:
+    encoding "^0.1.13"
+
 electron-packager@^17.1.1:
   version "17.1.1"
   resolved "https://registry.npmjs.org/electron-packager/-/electron-packager-17.1.1.tgz"
