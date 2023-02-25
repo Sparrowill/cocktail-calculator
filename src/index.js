@@ -265,6 +265,7 @@ function doPDF(type){
     client = _client
     numDrinks = _numDrinks
     drinks = _drinks
+    var ingredientCost = 0
     if(client.ingredients == 'Yes'){
       //20% markup
      ingredientCost = _totalIngredientCost * 1.2
