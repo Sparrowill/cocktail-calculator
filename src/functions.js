@@ -40,9 +40,9 @@ function collectClientDetails() {
     });
     goToCheckboxes()
         /*names, address1, address2 = null, city, postcode, date, start, end, duration, guests, type, 
-    flair, bartender, bars, henGuests, glassware, ingredients, travel, extra, discount){*/ 
+    flair, bartender, bars, henGuests, glassware, ingredients, travel, extra){*/ 
         clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10], values[11], values[12],
-            values[13], values[14], values[15],values[16], values[17], values[18], values[19] )
+            values[13], values[14], values[15],values[16], values[17], values[18] )
         if(clientDetails.name == ''){
             clientDetails.name = 'John Smith'
         }

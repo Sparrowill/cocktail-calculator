@@ -37,6 +37,7 @@ const createWindow = () => {
     },
   });
   mainWindow.maximize()
+  mainWindow.removeMenu()
   // Function to populate var _ingredients with contents of ingredients.json
   getPrices()
   // Literal black magic to pass data from functions.js to here
@@ -231,9 +232,12 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
     glasswareTitle = ''
     glasswareCol1 = ''
   }
+  console.log(client.extra)
+  var extraCost = parseInt(client.extra)
 
-  totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + client.extra)*100)/100
- 
+  totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + extraCost)*100)/100
+
+
   //PDF library to create event sheet
   var doc = new jsPDF("portrait","px","a4");
   var width = doc.internal.pageSize.getWidth();
