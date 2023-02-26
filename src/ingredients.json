@@ -201,13 +201,13 @@
             "cost": 1.20
         },
         {
-            "name": "Lime Slice",
-            "volume": 8,
+            "name": "Lime",
+            "volume": 1,
             "cost": 0.60
         },
         {
-            "name": "Lemon Slice",
-            "volume": 12,
+            "name": "Lemon",
+            "volume": 1,
             "cost": 0.12
         },
         {
@@ -222,7 +222,7 @@
         },
 
         {
-            "name": "Strawberry Half",
+            "name": "Strawberry",
             "volume": 400,
             "cost": 2.75
         },
@@ -232,13 +232,13 @@
             "cost": 2.85
         },
         {
-            "name": "Grapefruit Slice",
-            "volume": 20,
+            "name": "Grapefruit",
+            "volume": 1,
             "cost": 0.60
         },
         {
-            "name": "Pineapple Slice",
-            "volume": 50,
+            "name": "Pineapple",
+            "volume": 1,
             "cost": 1.60
         },
         {
@@ -248,7 +248,7 @@
         },
         {
             "name": "Sugar",
-            "volume": 3000,
+            "volume": 1000,
             "cost": 1.00
         },
         {
@@ -258,7 +258,7 @@
         },
         {
             "name": "Nescafe Azera",
-            "volume": 6000,
+            "volume": 90,
             "cost": 3.00
         },
         {
@@ -297,9 +297,9 @@
             "cost": 1.55
         },
         {
-            "name": "Egg White",
-            "volume": 10,
-            "cost": 1.50
+            "name": "Egg",
+            "volume": 12,
+            "cost": 2.00
         }
     ]
 }

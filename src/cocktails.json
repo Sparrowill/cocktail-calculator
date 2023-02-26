@@ -35,7 +35,7 @@
                     {
                         "name":"sugar",
                         "volume": 25,
-                        "unit": "ml"
+                        "unit": "g"
                     }
                     ]
             }
@@ -167,8 +167,8 @@
                 ],
                 "garnish":[
                     {
-                        "name":"pineapple slice",
-                        "volume": 1,
+                        "name":"pineapple",
+                        "volume": 0.05,
                         "unit": "pcs"
                     }
 
@@ -254,8 +254,8 @@
                 ],
                 "garnish":[
                     {
-                        "name":"lemon slice",
-                        "volume": 1,
+                        "name":"lemon",
+                        "volume": 0.08,
                         "unit": "pcs"
                     }
 
@@ -350,7 +350,7 @@
                     {
                         "name": "sugar",
                         "volume": 25,
-                        "unit": "ml"
+                        "unit": "g"
                     }
                     ]
             }
@@ -388,8 +388,8 @@
                 "garnish":[
                     {
                       "name": "raspberry",
-                      "volume": 2,
-                      "unit": "pcs"
+                      "volume": 5,
+                      "unit": "g"
                     }
 
                     ],
@@ -397,10 +397,10 @@
                     {
                         "name": "sugar",
                         "volume": 25,
-                        "unit": "ml"
+                        "unit": "g"
                     },
                     {
-                        "name": "egg white",
+                        "name": "egg",
                         "volume": 0.5,
                         "unit": "pcs"
                     }
@@ -485,8 +485,8 @@
                 ],
                 "garnish":[
                     {
-                      "name": "lime slice",
-                      "volume": 1,
+                      "name": "lime",
+                      "volume": 0.1,
                       "unit": "pcs"
                     }
 
@@ -526,8 +526,8 @@
                 ],
                 "garnish":[
                     {
-                      "name": "lime slice",
-                      "volume": 1,
+                      "name": "lime",
+                      "volume": 0.1,
                       "unit": "pcs"
                     }
 
@@ -568,8 +568,8 @@
                 "mixers":[
                     {
                         "name": "nescafe azera",
-                        "volume": 50,
-                        "unit": "ml"
+                        "volume": 1,
+                        "unit": "g"
                     }
                 ],
                 "garnish":[
@@ -582,7 +582,7 @@
                     {
                         "name": "sugar",
                         "volume": 25,
-                        "unit": "ml"
+                        "unit": "g"
                     }
                 ]
             }
@@ -627,7 +627,7 @@
                     {
                         "name": "sugar",
                         "volume": 15,
-                        "unit": "ml"
+                        "unit": "g"
                     }
                 ]
             }
@@ -659,8 +659,8 @@
                 ],
                 "garnish":[
                     {
-                        "name": "lemon slice",
-                        "volume": 1,
+                        "name": "lemon",
+                        "volume": 0.08,
                         "unit": "pcs"
                     }
                 ],
@@ -758,8 +758,8 @@
                 ],
                 "garnish":[
                     {
-                        "name": "lemon slice",
-                        "volume": 1,
+                        "name": "lemon",
+                        "volume": 0.08,
                         "unit": "pcs"
                     }
                 ],
@@ -849,8 +849,8 @@
                 ],
                 "garnish":[
                     {
-                      "name": "pineapple slice",
-                      "volume": 1,
+                      "name": "pineapple",
+                      "volume": 0.05,
                       "unit": "pcs"
 
                     }
@@ -896,8 +896,8 @@
                 ],
                 "garnish":[
                     {
-                      "name": "lime slice",
-                      "volume": 1,
+                      "name": "lime",
+                      "volume": 0.1,
                       "unit": "pcs"
                     }
                 ],
@@ -946,7 +946,7 @@
                     {
                         "name":"sugar",
                         "volume": 25,
-                        "unit": "ml"
+                        "unit": "g"
                     }
                 ]
             }
@@ -1032,7 +1032,7 @@
                     {
                         "name": "sugar",
                         "volume": 10,
-                        "unit": "pcs"
+                        "unit": "g"
                     },
                     {
                         "name": "angostura bitters",
@@ -1069,8 +1069,8 @@
                 ],
                 "garnish":[
                     {
-                        "name":"pineapple slice",
-                        "volume": 1,
+                        "name":"pineapple",
+                        "volume": 0.05,
                         "unit": "pcs"
                     }
                 ],
@@ -1126,7 +1126,7 @@
                 "garnish":[
                     {
                         "name":"passionfruit",
-                        "volume": 1,
+                        "volume": 0.5,
                         "unit": "pcs"
                     }
                 ],

@@ -146,7 +146,21 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
   var totalIngredientCost
   var rowsGenerated
 
-  // TODO: Bring back generate all button
+  //Generate All docs
+  if (options == 1) {
+    // Explicit definition of string comp to avoid misinterpretation of local var
+    if (rowsGenerated != 'Yes'){
+      var returnArr = getRows(client.duration, client.guests, shoppingList, ingredients)
+      tableRows = returnArr[0]
+      totalIngredientCost = returnArr[1]
+      rowsGenerated = 'Yes'
+    }
+    generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost)
+    generateEventMenu(title, numDrinks, drinks)
+    generateShoppingList(title, tableRows, totalIngredientCost)
+
+
+  }
   // Generate Event Sheet / Invoice
   if (options == 2) {
     // Explicit definition of string comp to avoid misinterpretation of local var
@@ -396,7 +410,7 @@ function generateShoppingList(title, tableRows, totalIngredientCost)
     imgData = 'data:image/png;base64,' + contents.toString('base64');
     doc.addImage(imgData,'png',0,0,width,currentY);
     doc.text("Shopping List for " + title, width/2,currentY,{align:'center'})
-    currentY+= 5
+    currentY+= 15
     doc.setFont('Tahoma', 'normal')
     doc.setFontSize(10)
     doc.text("(Costings are approximate only)",width/2,currentY,{align:'center'})
