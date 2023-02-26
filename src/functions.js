@@ -20,6 +20,7 @@ var ids = [];
 // The function then moves the page on to selec cocktails required
 
 function collectClientDetails() {
+    doJSON()
     let details = document.querySelectorAll('input[name="details"]');
     let values = [];
     details.forEach((detail) => {
@@ -327,3 +328,8 @@ function ClientObject(names, address1, address2 = null, city, postcode, date, st
 const createPDF = async (title, content, numDrinks, drinks, options, shoppingList) => {
   window.versions.pdf(title, content, numDrinks, drinks, options, shoppingList)
   }
+
+
+const doJSON = async () => {
+    window.versions.json()
+    }
