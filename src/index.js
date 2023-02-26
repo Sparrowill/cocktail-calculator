@@ -38,11 +38,12 @@ const createWindow = () => {
   });
   mainWindow.maximize()
   mainWindow.removeMenu()
-  // Function to populate var _ingredients with contents of ingredients.json
-  getPrices()
+
   // Literal black magic to pass data from functions.js to here
   ipcMain.handle('PDF', (event, title, client, numDrinks, drinks, options, shoppingList) => {generateDocs(title, client, numDrinks, drinks, options, shoppingList)});
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  // Function to populate var _ingredients with contents of ingredients.json
+  getPrices() 
 };
 
 // This method will be called when Electron has finished
