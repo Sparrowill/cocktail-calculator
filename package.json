@@ -1,7 +1,7 @@
 {
   "name": "cocktail-calculator",
   "productName": "cocktail-calculator",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A shopping list creator for Cocktail Hire",
   "main": "src/index.js",
   "scripts": {
