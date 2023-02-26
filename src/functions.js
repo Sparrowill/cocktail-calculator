@@ -11,9 +11,6 @@ var shoppingList = Object;
 var chosenCocktails = Object;
 var ids = [];
 
-// Import useful functions from helperFunctions.js
-
-
 // collectClientDetails()
 // Takes no input
 // Returns no outputs
