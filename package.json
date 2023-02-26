@@ -17,8 +17,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "csv-parse": "^5.3.4",
-    "electron-fetch": "^1.9.1",
     "electron-squirrel-startup": "^1.0.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",

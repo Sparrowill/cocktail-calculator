@@ -3,8 +3,6 @@ const path = require('path');
 const { jsPDF } = require("jspdf"); // will automatically load the node version
 require("jspdf-autotable");
 const fs = require ('fs');
-const {JSONingredients} = require('./ingredients.json');
-const { totalmem } = require('os');
 require("./Tahoma-Regular-font-normal");
 require("./tahoma-bold");
 
@@ -218,13 +216,11 @@ function getRows(ingredients, duration, numGuests, shoppingList) {
   console.log(_tableRows[k].totalCost)
   _totalIngredientCost+= _tableRows[k].totalCost
  }
- console.log(_totalIngredientCost)
  doPDF(_type)
 }
 
 function doPDF(type){
   if (type == 'Shopping List'){
-    console.log("328",_tableRows)
     const doc = new jsPDF("portrait","px","a4");
     var width = doc.internal.pageSize.getWidth();
     var currentY = 155
@@ -256,12 +252,11 @@ function doPDF(type){
       currentX = 45
     }
     doc.setFont('Tahoma', 'bold')
-    doc.text("Total Cost: " + formatter.format(_totalIngredientCost),  315, currentY)
+    doc.text("Total Cost: " + formatter.format(_totalIngredientCost),  310, currentY)
 
     saveDoc(doc, "Shopping List", _title )
   } 
   else if (type == 'Event Sheet') {
-    
     client = _client
     numDrinks = _numDrinks
     drinks = _drinks
