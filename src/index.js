@@ -162,7 +162,7 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
 
   }
   // Generate Event Sheet / Invoice
-  if (options == 2) {
+  else if (options == 2) {
     // Explicit definition of string comp to avoid misinterpretation of local var
     if (rowsGenerated != 'Yes'){
       var returnArr = getRows(client.duration, client.guests, shoppingList, ingredients)
@@ -194,7 +194,7 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
     app.quit();
     
   } else{
-    console.log("ERR: Options != 2-5, got ", options)
+    console.log("ERR: Options != 1-5, got ", options)
   }
 }
 
@@ -246,7 +246,6 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
     glasswareTitle = ''
     glasswareCol1 = ''
   }
-  console.log(client.extra)
   var extraCost = parseInt(client.extra)
 
   totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + extraCost)*100)/100
