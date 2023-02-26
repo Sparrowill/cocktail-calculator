@@ -81,7 +81,7 @@ app.on('activate', () => {
 
 function getPrices() {
 
-  fs.readFile("./src/ingredients.json", "utf8", (err, jsonString) => {
+  fs.readFile(path.join(__dirname, 'ingredients.json'), "utf8", (err, jsonString) => {
     if (err) {
       console.log("Error reading file from disk:", err);
     }
