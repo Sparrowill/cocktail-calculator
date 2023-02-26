@@ -4,94 +4,31 @@
 // Functions to augment html functionality
 //////////////////////////////////////////
 // Global variables
-const path = './cocktails.json';
+const path = './cocktails.json'; // Path to drink recipes json
+const MAX_COCKTAILS = 8 // Max selectable cocktails
 var clientDetails = Object;
 var shoppingList = Object;
 var chosenCocktails = Object;
 var ids = [];
 
-// getCocktails()
-// 
-// Has no inputs
-// returns no outputs
-//
-// This function reads in the list 'cocktails.json' and passes it to storeCocktails
-function getCocktails() {
-    fetch(path)
-    .then(response => response.json())
-    .then(json => storeCocktails(json))
-}
+// Import useful functions from helperFunctions.js
 
-// storeCocktails() 
-//
-// Takes a json object as an input
-// returns no outputs
-//
-// This function takes a json object and parses the names into an array
-// This array is then passed to createCheckboxes
 
-function storeCocktails(cocktails) {   
-    const names = [];
-    for (let i = 0; i < cocktails.Cocktails.length; i++) {
-        names.push(cocktails.Cocktails[i].name);
-    }
-    createCheckboxes(names);
-}
-
-// createCheckboxes()
-// Takes an array of strings as an input
-// Returns no outputs
-//
-// This function creates checkboxes with the values defined in the array 'cocktails'
-// The checkboxes are added to a div with the id 'checkboxes'
-
-function createCheckboxes(cocktailNames) {
-    // define cocktails and sort alphabetically
-    const cocktails = cocktailNames.sort();
-    var count = 0
-    cocktails.forEach((cocktail)=>{
-        //  generate id
-        const id = `cocktail-${cocktail}`;
-
-        // create a label
-        const label = document.createElement('label');
-        label.setAttribute("for", id);
-        
-        // create a checkbox
-        const checkbox = document.createElement('input');
-        checkbox.type = "checkbox";
-        checkbox.name = "cocktail";
-        checkbox.value = cocktail;
-        checkbox.id = id;
-
-        // place the checkbox inside a label
-        label.appendChild(checkbox);
-        // create text node
-        label.appendChild(document.createTextNode(cocktail));
-        // add the label to the appropriate div
-        if(count<(cocktails.length/2)){
-            document.getElementById('checkboxes1').appendChild(label);
-            document.getElementById('checkboxes1').appendChild(document.createElement("br"));
-        } else {
-            document.getElementById('checkboxes2').appendChild(label);
-            document.getElementById('checkboxes2').appendChild(document.createElement("br"));
-        }
-        count++
-    });
-}
-
-// hideClientDetails()
+// collectClientDetails()
 // Takes no input
 // Returns no outputs
 //
 // This function collects the client details and stores them in an object
-// This object is then printed to console
+// 
 // The function then moves the page on to selec cocktails required
 
-function hideClientDetails() {
+function collectClientDetails() {
     let details = document.querySelectorAll('input[name="details"]');
     let values = [];
     details.forEach((detail) => {
+        // Print warnings if empty items in inputs
+        checkDetail(detail)
+        // Converts bool to string, easier to print to pdf later
         if(detail.id == 'henGuests' || detail.id == 'ingredients' || detail.id == 'glassware'){
             if (detail.checked == true){
                 detail.value = 'Yes'
@@ -101,12 +38,7 @@ function hideClientDetails() {
         }
         values.push(detail.value);
     });
-        document.getElementById('clientDetails').style.display = "none";
-        document.getElementById('checkboxes').style.display = "block";
-        document.getElementById('submit').style.display = "block";
-        // If hen party then guests = hen guests, else no hen guests
-        console.log(values);
-        
+    goToCheckboxes()
         /*names, address1, address2 = null, city, postcode, date, start, end, duration, guests, type, 
     flair, bartender, bars, henGuests, glassware, ingredients, travel, extra, discount){*/ 
         clientDetails = new ClientObject(values[0],values[1],values[2],values[3], values[4], values[5], values[6], values[7], values[8], values[9], values[10], values[11], values[12],
@@ -133,6 +65,7 @@ function hideClientDetails() {
 
 // This function takes all the inputted cocktails, and prints them to console
 function submitData() {
+    // Hide any previous errors
     document.getElementById('overflowError').style.visibility = "hidden"; 
     document.getElementById('emptyArrayError').style.visibility = "hidden"; 
 
@@ -141,17 +74,8 @@ function submitData() {
     checkboxes.forEach((checkbox) => {
         values.push(checkbox.value);
     });
-    // Error checking for empty array
-    if(values.length>0 && values.length<100){
-        document.getElementById('checkboxes').style.display = "none";
-        document.getElementById('submit').style.display = "none";
-        getIngredients(values);  
-    } else if(values.length == 0) {
-        console.log("ERR");
-        document.getElementById('emptyArrayError').style.visibility = "visible"; 
-    } else {
-        console.log("ERR");
-        document.getElementById('overflowError').style.visibility = "visible";
+    if (checkErrors(values)){
+        getIngredients(values); 
     }
 }
 
@@ -232,7 +156,7 @@ function generateDocuments(options) {
 }
 
 
-// combineAlcohol()C
+// combineAlcohol()
 // Takes inputs of the current list of alcohols used, and the alcohols in the new cocktail
 // returns an altered list of alcohols used
 //
@@ -397,41 +321,13 @@ function ClientObject(names, address1, address2 = null, city, postcode, date, st
     this.discount=discount
 }
 
-// check()
-// Takes an input of what state to set the checkboxes to. default is true
-// Returns no output
+
+// createPDF()
 //
-//This function checks or unchecks all checkboxes with the name 'cocktail'
-
-function check(checked = true) {
-    const checkboxes = document.querySelectorAll('input[name="cocktail"]');
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = checked;
-    });
-}
-
-// checkAll()
-// Takes no inputs
-// Returns no outputs
-
-//This is a helper function that toggles checkbox state
-
-function checkAll() {
-check();
-this.onclick = uncheckAll;
-}
-
-// uncheckAll()
-// Takes no inputs
-// Returns no outputs
-
-//This is a helper function that toggles checkbox state
-
-function uncheckAll() {
-check(false);
-this.onclick = checkAll;
-}
-
+// function takes a whole load of inputs to be sent to index.js
+// function returns no outputs
+//
+// Function acts as a handler to send all collected data to index.js
 const createPDF = async (title, content, numDrinks, drinks, options, shoppingList) => {
   window.versions.pdf(title, content, numDrinks, drinks, options, shoppingList)
   }
