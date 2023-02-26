@@ -330,6 +330,12 @@ const createPDF = async (title, content, numDrinks, drinks, options, shoppingLis
   }
 
 
+// doJSON()
+//
+// Function takes no inputs
+// function returns no outputs
+//
+// Function acts as a handler to read in ingredients.json
 const doJSON = async () => {
     window.versions.json()
     }
