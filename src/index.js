@@ -280,7 +280,7 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
       ['Event Address', client.address1],
       ['', client.address2],
       ['', client.city],
-      ['Postcode',client.postcode],
+      ['Postcode',client.postcode.toUpperCase()],
       ['Nature of Event', client.type],
       ['Times of Event', {content: ['Bar Staff to arrive 1hr before Service Start',], styles: {fontStyle: 'bold'}}],
       ['Service Start Time', client.start],
