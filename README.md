@@ -1,7 +1,6 @@
-# README #
-## Cocktail Calculator User Guide ##
+# Cocktail Calculator User Guide #
 
-### Installation ###
+## Installation ##
 Download the correct binary for your OS from the latest release page.<br>
 (.exe for Windows, .deb for Linux etc.)
 
@@ -9,7 +8,7 @@ Run the setup installer and ignore all the security warnings. To get rid of thos
 
 That's it! There should be a shortcut to run the app on your Desktop (or equivalent, I'm devving on Windows)
 
-### Page 1 ###
+## Page 1 ##
 A Description of each field, and what it does:
 
 (All fields are optional and have very little error checking.)
@@ -55,13 +54,13 @@ If left blank, defaults to 1
 
 - Extra Cost (±£) - Free number box to add or subtract cost as necessary.
 
-### Page 2 ###
+## Page 2 ##
 
 Here the cocktails for the event can be selected. They are generated from the recipes stored in cocktails.json.
 
 <b>Due to space constraints on the menu and event sheet, a maximum of 8 cocktails can be selected for any event.</b> <br>Come ask me if you want me to take that limit off. Formatting will die if we do.
 
-### Page 3 ###
+## Page 3 ##
 
 Click various buttons to do various things. 
 
