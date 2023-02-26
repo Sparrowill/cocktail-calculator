@@ -535,8 +535,8 @@
                 "other":[
                     {
                         "name": "angostura bitters",
-                        "volume": 1,
-                        "unit": "dash"
+                        "volume": 0.1,
+                        "unit": "ml"
                     }
                 ]
             }
@@ -1036,8 +1036,8 @@
                     },
                     {
                         "name": "angostura bitters",
-                        "volume": 1,
-                        "unit": "dash"
+                        "volume": 0.1,
+                        "unit": "ml"
                     }
                 ]
             }            

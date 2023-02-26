@@ -212,8 +212,8 @@
         },
         {
             "name": "Mint Leaves",
-            "volume": 25,
-            "cost": 0.25
+            "volume": 30,
+            "cost": 0.50
         },
         {
             "name": "Orange",
@@ -268,7 +268,7 @@
         },
         {
             "name": "Angostura Bitters",
-            "volume": 300,
+            "volume": 200,
             "cost": 10.00
         },
         {

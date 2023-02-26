@@ -1,3 +1,4 @@
+// Imports and module dependencies
 const {dialog, app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { jsPDF } = require("jspdf"); // will automatically load the node version
@@ -6,21 +7,19 @@ const fs = require ('fs');
 require("./Tahoma-Regular-font-normal");
 require("./tahoma-bold");
 
-var _tableRows = []
-var _duration 
-var _numGuests
-var _shoppingList
-var _title
-var _totalIngredientCost = 0
-var _client
-var _numDrinks
-var _drinks
+// Global Variable to get the ingredients out of async function hell
+var _ingredients
 
+//Multiplier for calcualting total volume required
+const DRINKS_PER_PERSON_PER_HOUR = 0.33
+
+// formatter that converts integers into a £00.00 format.
 const formatter = new Intl.NumberFormat('en-GB', {
     style: 'currency',
     currency: 'GBP',
 
 })
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -30,14 +29,17 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     
+    // Backup dimensions in case maximise() is not supported
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  //mainWindow.webContents.openDevTools()
-
+  mainWindow.maximize()
+  // Function to populate var _ingredients with contents of ingredients.json
+  getPrices()
+  // Literal black magic to pass data from functions.js to here
   ipcMain.handle('PDF', (event, title, client, numDrinks, drinks, options, shoppingList) => {generateDocs(title, client, numDrinks, drinks, options, shoppingList)});
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 };
@@ -65,49 +67,267 @@ app.on('activate', () => {
   }
 });
 
+// getPrices()
+//
+// Function takes event duration, number of guests, and the shoppingList oject as inputs
+// Function returns no outputs
+//
+// fs.readFile is asynchronous, the rest of the fucntion executes while the file is being read
+// this is realy fecking annoying
+// To avoid this, getPrices is called before the app launches. Ensures the variable is populated when needed
 
-// generatePDF does blackmagic with listeners to implement JS PDF. Uses object children to write job sheet
+function getPrices() {
 
+  fs.readFile("./src/ingredients.json", "utf8", (err, jsonString) => {
+    if (err) {
+      console.log("Error reading file from disk:", err);
+    }
+      const my = JSON.parse(jsonString);
+      _ingredients = my.ingredients
+  });
+}
+
+// getRows()
+//
+// Function takes event duration, number of guests, the shopping list object, and the ingredients object as inputs
+// Function returns the table rows for the shopping list, and the total ingredient cost as outputs
+//
+// Function loops through the shopping list, and finds the matching ingredient in ingredients
+// Then add Ingredient, amount per bottle, cost per bottle, ,total volume needed, and the units to the tablerow array
+// as a row object
+function getRows(duration, numGuests, shoppingList, ingredients) {
+  var tableRows = []
+  var totalIngredientCost = 0
+  for(let i =0; i<shoppingList.length;i++){
+    var volPerUnit = 0
+    var costPerUnit = 0
+    var found = 0
+      //Find match between item on shopping list and item in ingredients.json
+    for (let j =0; j<ingredients.length; j++){
+      if(shoppingList[i].name.toUpperCase() == ingredients[j].name.toUpperCase()){
+        volPerUnit = ingredients[j].volume
+        costPerUnit = ingredients[j].cost
+        shoppingList[i].name = ingredients[j].name
+        found = 1
+      } else{
+        if(j== ingredients.length-1 && found!=1){
+          console.error("ERR: No match found for ingredient ", shoppingList[i].name)
+        }
+      }
+    }
+    // Calculate total Volume of ingredient required
+    totalVol = shoppingList[i].volume * duration * numGuests * DRINKS_PER_PERSON_PER_HOUR
+    tableRows.push(new row(shoppingList[i].name,volPerUnit,costPerUnit,totalVol,shoppingList[i].unit))
+  }
+  //  calculate total ingredient cost
+  totalIngredientCost = 0
+  for (let k=0;k<tableRows.length;k++){
+    totalIngredientCost+= tableRows[k].totalCost
+  }
+  //Construct array of things to return
+  var returnArr = [tableRows, totalIngredientCost]
+  return returnArr
+}
+
+// generateDocs()
+//
+// function takes the client name, the clienDetails Object, the ids of the chosen cocktails,
+// the chosenCocktails Object, an integer called options, and the shoppingList object as inputs
+//
+// function returns no outputs
+//
+// Function decodes the options variable, which is implemented in index.html to determine
+// which button was pressed by the user.
+// 
 function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
-  _title = title
-  _client = client
-  _numDrinks = numDrinks
-  _drinks = drinks
-  if (options == 1) {
-    generateEventSheetPDF(title, client, numDrinks, drinks)
-    generateEventMenu(title, numDrinks, drinks)
-    generateShoppingList(title, client, numDrinks, drinks, shoppingList)
+  var ingredients = _ingredients
+  var tableRows
+  var totalIngredientCost
+  var rowsGenerated
+
+  // TODO: Bring back generate all button
+  // Generate Event Sheet / Invoice
+  if (options == 2) {
+    // Explicit definition of string comp to avoid misinterpretation of local var
+    if (rowsGenerated != 'Yes'){
+      var returnArr = getRows(client.duration, client.guests, shoppingList, ingredients)
+      tableRows = returnArr[0]
+      totalIngredientCost = returnArr[1]
+      rowsGenerated = 'Yes'
+    }
+    generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost)
   }
-  else if (options == 2) {
-    generateEventSheetPDF(title, client, numDrinks, drinks,shoppingList)
-  }
+  // generate Bar Menu
   else if (options == 3) {
     generateEventMenu(title, numDrinks, drinks)
   }
+  // Generate client shopping list
   else if (options == 4) {
-    generateShoppingList(title, client, numDrinks, drinks, shoppingList)
+    // Explicit definition of string comp to avoid misinterpretation of local var
+    if (rowsGenerated != 'Yes'){
+      var returnArr = getRows(client.duration, client.guests, shoppingList, ingredients)
+      tableRows = returnArr[0]
+      totalIngredientCost = returnArr[1]
+      rowsGenerated = 'Yes'
+    }
+  generateShoppingList(title, tableRows, totalIngredientCost)
     
   }
+  // App restart
   else if (options == 5) {
     app.relaunch();
     app.quit();
     
   } else{
-    console.log("ERR: Options != 1-5, got ", options)
+    console.log("ERR: Options != 2-5, got ", options)
   }
- 
-}
-function generateEventSheetPDF(title, client, numDrinks, drinks,shoppingList){
-  _duration = client.duration
-  _numGuests = client.guests
-  _shoppingList = shoppingList
-  _type = 'Event Sheet'
-  getPrices()
-  
 }
 
+// generateEventSheet()
+//
+// Function takes the client name, the client object, the array of selected drink ids, the chosenCocktails object, and 
+// the total ingredient cost as inputs
+// Function returns no outputs
+//
+// Function does all the invoice maths
+// Function uses jspdf to create a pdf object (doc) of the event sheet
+// the autotable plugin is also used to make my life easier
+// the generated doc may extend onto two pages if many cocktails are selected.
+function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost){
+  // Invoice Maths
+  var ingredientCost = 0
+  if(client.ingredients == 'Yes'){
+    //20% markup
+   ingredientCost = totalIngredientCost * 1.2
+  } else {
+    ingredientCost = 0
+  }
+  henRate = 25
+  flairRate = 72.50
+  bartenderRate = 52.50
+  barRate = 300
+  travelRate = 0.75
+  glasswareRate = 1
+  glasswareFlat = 20
+  henGuestCost = Math.round(client.henGuests*henRate*100)/100
+  flairCost = Math.round(client.flair*client.duration*flairRate*100)/100
+  bartenderCost = Math.round(client.bartender*client.duration*bartenderRate*100)/100
+  barCost = Math.round(client.bars * barRate*100)/100
+  travelCost = Math.round(client.travel * travelRate*100)/100
+  // invoice maths ends
+  // All the faff to delete the glassware row
+  glasswareCost = 0
+  glasswareCol2 = ''
+  glasswareCol3  = formatter.format(glasswareCost)
+  if (client.bars > 0) {
+    glasswareTitle = 'Glassware Required'
+    glasswareCol1 = client.glassware
+    if (client.glassware == 'Yes'){
+      glasswareCol2 = formatter.format(glasswareRate) +' per person + ' + formatter.format(glasswareFlat)
+      glasswareCost = Math.round((glasswareFlat + (client.guests * glasswareRate))*100)/100
+      glasswareCol3  = formatter.format(glasswareCost)
+    }
+  } else {
+    glasswareTitle = ''
+    glasswareCol1 = ''
+  }
+
+  totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + client.extra)*100)/100
+ 
+  //PDF library to create event sheet
+  var doc = new jsPDF("portrait","px","a4");
+  var width = doc.internal.pageSize.getWidth();
+  doc.setFont('Tahoma')
+  doc.setFontSize(12);
+  const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
+  imgData = 'data:image/png;base64,' + contents.toString('base64');
+  doc.addImage(imgData,'png',0,0,width,155);
+  // Generate table Before procedural cocktails
+  doc.autoTable({
+    startY: 120,
+    theme: 'plain',
+    styles: {
+      fontSize: 12
+      },
+    columnStyles: {
+      0: {
+        cellWidth: 120,
+        fillColor: [207,207,207],
+        fontStyle: 'bold'
+      }
+    },
+    body: [
+      ['Contact', client.name],
+      ['Date', client.date],
+      ['Event Address', client.address1],
+      ['', client.address2],
+      ['', client.city],
+      ['Postcode',client.postcode],
+      ['Nature of Event', client.type],
+      ['Times of Event', {content: ['Bar Staff to arrive 1hr before Service Start',], styles: {fontStyle: 'bold'}}],
+      ['Service Start Time', client.start],
+      ['Service Finish Time', client.end],
+      ['Total Service Hours', {content: [client.duration,], styles: {fillColor: [255,255,0]}}],
+      ['Guests', {content: [client.guests,], styles: {fillColor: [255,255,0]}}],
+      ['Cocktail Selection'],
+    ],
+  })
+  //Cocktail insert
+  let finalY = doc.lastAutoTable.finalY;
+  doc.setFillColor('#CFCFCF');
+  doc.rect(30,finalY,120,(numDrinks.length-1)*13,'F')
+  for(let i = 0; i < numDrinks.length; i++){
+    doc.text(152,finalY -5 + i*13 ,drinks.Cocktails[numDrinks[i]-1].name);
+  }
+
+  // Generate bit of table AFTER procedurally entered cocktails
+ doc.autoTable({
+    startY: doc.lastAutoTable.finalY + (numDrinks.length-1)*13,
+    theme: 'plain',
+    styles: {
+      fontSize: 12
+      },
+    columnStyles: {
+      0: {
+        cellWidth: 120,
+        fillColor: [207,207,207],
+        fontStyle: 'bold'
+      },
+      1: {
+      },
+      2:{
+      },
+      3:{
+      }
+    },
+    body: [
+      ['Uniforms', {content: ['White Shirt, Black Trousers/Jeans (NO RIPS)\nBlack Shoes (trainers allowed, but only black)',], colSpan: 3, styles: {fontStyle: 'bold'}}],
+      ['Hen Do Masterclass', {content: [client.henGuests,], styles: {fillColor: [255,255,0]}},formatter.format(henRate) + ' per person', formatter.format(henGuestCost)],
+      ['No. Flair Bartenders', {content: [client.flair,], styles: {fillColor: [255,255,0]}},formatter.format(flairRate) + ' per hour', formatter.format(flairCost)],
+      ['No. Cocktail Bartenders',{content: [client.bartender,], styles: {fillColor: [255,255,0]}},formatter.format(bartenderRate) +' per hour', formatter.format(bartenderCost)],
+      ['Ingredients Required',client.ingredients,'',formatter.format(ingredientCost)],
+      ['Bar Hire',{content: [client.bars,], styles: {fillColor: [255,255,0]}}, formatter.format(barRate) +' each', formatter.format(barCost)],
+      [glasswareTitle, glasswareCol1, glasswareCol2, glasswareCol3],
+      ['Travel Cost',{content: [client.travel,], styles: {fillColor: [255,255,0]}},'£' + travelRate +' per mile',formatter.format(travelCost)],
+      ['Extra Cost','','', formatter.format(client.extra)],
+      ['Total Cost','','', formatter.format(totalCost)],
+    ],
+  })
+  saveDoc(doc, "Event Sheet", title )
+
+}
+
+// generateEventMenu()
+//
+// Function takes the client name, the array of chosen drink ids, and the chosenCocktails object as inputs
+// Function returns no outputs
+//
+// Function uses jspdf to create a pdf object (doc) of the event menu
+// For 7 or fewer drinks, the cocktailhire logo is also displayed
+// for 8 drinks, just a cocktailhire title is shown
+// WARNING: More than 8 drinks will cause drinks to go off the page.
 function generateEventMenu(title, numDrinks, drinks){
-  const doc = new jsPDF("portrait","px","a4");
+  var doc = new jsPDF("portrait","px","a4");
   var width = doc.internal.pageSize.getWidth();
   doc.setFont('Tahoma', 'bold')
   doc.setFontSize(15);
@@ -130,6 +350,7 @@ function generateEventMenu(title, numDrinks, drinks){
     doc.setFontSize(17);
     doc.setFont('Tahoma','bold');
     doc.text(drinks.Cocktails[numDrinks[i]-1].name,width/2,height + j,{ maxWidth: width-20,align:'center'})
+    // Add mocktail info if cocktail can be made non-alch
     if(drinks.Cocktails[numDrinks[i]-1].mocktail == 'true'){
       j+=13
       doc.setFontSize(11);
@@ -146,17 +367,72 @@ function generateEventMenu(title, numDrinks, drinks){
     j+=45
     
   }
+  // Pass to save doc function
   saveDoc(doc, "Cocktail Menu", title )
 }
 
-function generateShoppingList(title, client, numDrinks, drinks, shoppingList){
-  _duration = client.duration
-  _numGuests = client.guests
-  _shoppingList = shoppingList
-  _type = 'Shopping List'
-  getPrices()
+// generateShoppingList()
+//
+// function takes the client name, the tableRows array of row objects, and the total ingredient cost as inputs
+// Function returns no outputs
+//
+// Function uses jspdf to create a pdf object (doc) of the client shopping list
+// Doesn't use autotable becuase that doesn't really support varying row numbers
+// That's p much it really
+// currentY and currentX are used to keep track of cursor position
+function generateShoppingList(title, tableRows, totalIngredientCost)
+{
+  
+    var doc = new jsPDF("portrait","px","a4");
+    var width = doc.internal.pageSize.getWidth();
+    var currentY = 155
+    doc.setFont('Tahoma', 'bold')
+    doc.setFontSize(20);
+    const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
+    imgData = 'data:image/png;base64,' + contents.toString('base64');
+    doc.addImage(imgData,'png',0,0,width,currentY);
+    doc.text("Shopping List for " + title, width/2,currentY,{align:'center'})
+    currentY+= 5
+    doc.setFont('Tahoma', 'normal')
+    doc.setFontSize(10)
+    doc.text("(Costings are approximate only)",width/2,currentY,{align:'center'})
+    doc.setFont('Tahoma', 'bold')
+    doc.setFontSize(13);
+    currentY +=20
+    doc.text("Ingredient      Vol. per unit     Cost per unit     Units required      Total Cost", width/2,currentY,{align:'center'})
+    doc.setFont('Tahoma', 'normal')
+    doc.setFontSize(10);
+    currentY += 15
+    currentX = 45
+    for(let i =0; i<tableRows.length; i++){
+      doc.text(tableRows[i].name,currentX,currentY)
+      currentX +=70
+      doc.text(tableRows[i].volPerUnit,currentX,currentY)
+      currentX +=75
+      doc.text(formatter.format(tableRows[i].costPerUnit),currentX,currentY)
+      currentX +=75
+      doc.text(tableRows[i].unitsRequired.toString(),currentX,currentY)
+      currentX +=90
+      doc.text(formatter.format(tableRows[i].totalCost),currentX,currentY)
+      currentY +=13
+      currentX = 45
+    }
+    doc.setFont('Tahoma', 'bold')
+    doc.text("Total Cost: " + formatter.format(totalIngredientCost),  312, currentY)
+
+    saveDoc(doc, "Shopping List", title ) 
 }
 
+// saveDoc()
+//
+// Function takes the pdf doc object, the type of doc it is, and the name of the client as inputs
+// Function returns no outputs
+//
+// Function opens a save dialog with a load of useful preinput data, see the showSaveDialog docs for options.
+// the options are stored in the settings object
+// BUG: If the save window is cancelled, the pdf is saved as generated.pdf in the app filesystem.
+// Only one doc is stored at once (overwrites)
+// no biggy, mainly cos I can't fix it
 const saveDoc = async (doc, type, title) => {
   let settings = {
     title: 'Save ' + type + ' As...',
@@ -171,221 +447,19 @@ const saveDoc = async (doc, type, title) => {
   }
   const saveWindow = await dialog.showSaveDialog(BrowserWindow.getFocusedWindow(), settings)
     if(saveWindow.cancelled){
+      // creates generated pdf here. meh
     }else {
       doc.save(saveWindow.filePath)
     }
 }
 
-function getPrices() {
-  
-  fs.readFile("./src/ingredients.json", "utf8", (err, jsonString) => {
-    if (err) {
-      console.log("Error reading file from disk:", err);
-      return;
-    }
-      const my = JSON.parse(jsonString);
-      getRows(my.ingredients, _duration, _numGuests, _shoppingList)
-      return
-  });
-}
 
-function getRows(ingredients, duration, numGuests, shoppingList) {
-  _tableRows = []
- for(let i =0; i<shoppingList.length;i++){
-  var volPerUnit = 0
-  var costPerUnit = 0
-  var found = 0
-    //Find math between item on shopping list and item in ingredients.json
-    for (let j =0; j<ingredients.length; j++){
-      if(shoppingList[i].name.toUpperCase() == ingredients[j].name.toUpperCase()){
-        volPerUnit = ingredients[j].volume
-        costPerUnit = ingredients[j].cost
-        shoppingList[i].name = ingredients[j].name
-        found = 1
-      } else{
-          if(j== ingredients.length-1 && found!=1){
-            console.error("ERR: No match found for ingredient ", shoppingList[i].name)
-          }
-      }
-    }
-    totalVol = shoppingList[i].volume * duration * numGuests * 0.33
-    _tableRows.push(new row(shoppingList[i].name,volPerUnit,costPerUnit,totalVol,shoppingList[i].unit))
- }
- _totalIngredientCost = 0
- for (let k=0;k<_tableRows.length;k++){
-  console.log(_tableRows[k].totalCost)
-  _totalIngredientCost+= _tableRows[k].totalCost
- }
- doPDF(_type)
-}
-
-function doPDF(type){
-  if (type == 'Shopping List'){
-    const doc = new jsPDF("portrait","px","a4");
-    var width = doc.internal.pageSize.getWidth();
-    var currentY = 155
-    doc.setFont('Tahoma', 'bold')
-    doc.setFontSize(20);
-    const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
-    imgData = 'data:image/png;base64,' + contents.toString('base64');
-    doc.addImage(imgData,'png',0,0,width,currentY);
-    doc.text("Shopping List for " + _title, width/2,currentY,{align:'center'})
-    doc.setFont('Tahoma', 'bold')
-    doc.setFontSize(13);
-    currentY +=20
-    doc.text("Ingredient      Vol. per unit     Cost per unit     Units required      Total Cost", width/2,currentY,{align:'center'})
-    doc.setFont('Tahoma', 'normal')
-    doc.setFontSize(10);
-    currentY += 15
-    currentX = 45
-    for(let i =0; i<_tableRows.length; i++){
-      doc.text(_tableRows[i].name,currentX,currentY)
-      currentX +=70
-      doc.text(_tableRows[i].volPerUnit,currentX,currentY)
-      currentX +=75
-      doc.text(formatter.format(_tableRows[i].costPerUnit),currentX,currentY)
-      currentX +=75
-      doc.text(_tableRows[i].unitsRequired.toString(),currentX,currentY)
-      currentX +=90
-      doc.text(formatter.format(_tableRows[i].totalCost),currentX,currentY)
-      currentY +=13
-      currentX = 45
-    }
-    doc.setFont('Tahoma', 'bold')
-    doc.text("Total Cost: " + formatter.format(_totalIngredientCost),  310, currentY)
-
-    saveDoc(doc, "Shopping List", _title )
-  } 
-  else if (type == 'Event Sheet') {
-    client = _client
-    numDrinks = _numDrinks
-    drinks = _drinks
-    var ingredientCost = 0
-    if(client.ingredients == 'Yes'){
-      //20% markup
-     ingredientCost = _totalIngredientCost * 1.2
-    } else {
-      ingredientCost = 0
-    }
-    henRate = 25
-    flairRate = 72.50
-    bartenderRate = 52.50
-    barRate = 300
-    travelRate = 0.75
-    glasswareRate = 1
-    glasswareFlat = 20
-    henGuestCost = Math.round(client.henGuests*henRate*100)/100
-    flairCost = Math.round(client.flair*client.duration*flairRate*100)/100
-    bartenderCost = Math.round(client.bartender*client.duration*bartenderRate*100)/100
-    barCost = Math.round(client.bars * barRate*100)/100
-    travelCost = Math.round(client.travel * travelRate*100)/100
-    glasswareCost = 0
-    // All the faff to delete the glassware row
-    glasswareCol2 = ''
-    glasswareCol3  = formatter.format(glasswareCost)
-    if (client.bars > 0) {
-      glasswareTitle = 'Glassware Required'
-      glasswareCol1 = client.glassware
-      if (client.glassware == 'Yes'){
-        glasswareCol2 = formatter.format(glasswareRate) +' per person + ' + formatter.format(glasswareFlat)
-        glasswareCost = Math.round((glasswareFlat + (client.guests * glasswareRate))*100)/100
-        glasswareCol3  = formatter.format(glasswareCost)
-      }
-    } else {
-      glasswareTitle = ''
-      glasswareCol1 = ''
-    }
-  
-    totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + client.extra)*100)/100
-   
-    //PDF library to create event sheet
-    const doc = new jsPDF("portrait","px","a4");
-    var width = doc.internal.pageSize.getWidth();
-    doc.setFont('Tahoma')
-    doc.setFontSize(12);
-    const contents = fs.readFileSync(path.join(__dirname, 'bigLogo.png'), "base64")
-    imgData = 'data:image/png;base64,' + contents.toString('base64');
-    doc.addImage(imgData,'png',0,0,width,155);
-    doc.autoTable({
-      startY: 120,
-      theme: 'plain',
-      styles: {
-        fontSize: 12
-        },
-      columnStyles: {
-        0: {
-          cellWidth: 120,
-          fillColor: [207,207,207],
-          fontStyle: 'bold'
-        }
-      },
-      body: [
-        ['Contact', client.name],
-        ['Date', client.date],
-        ['Event Address', client.address1],
-        ['', client.address2],
-        ['', client.city],
-        ['Postcode',client.postcode],
-        ['Nature of Event', client.type],
-        ['Times of Event', {content: ['Bar Staff to arrive 1hr before Service Start',], styles: {fontStyle: 'bold'}}],
-        ['Service Start Time', client.start],
-        ['Service Finish Time', client.end],
-        ['Total Service Hours', {content: [client.duration,], styles: {fillColor: [255,255,0]}}],
-        ['Guests', {content: [client.guests,], styles: {fillColor: [255,255,0]}}],
-        ['Cocktail Selection'],
-      ],
-    })
-    //Cocktail insert
-    let finalY = doc.lastAutoTable.finalY;
-    doc.setFillColor('#CFCFCF');
-    doc.rect(30,finalY,120,(numDrinks.length-1)*13,'F')
-    for(let i = 0; i < numDrinks.length; i++){
-      doc.text(152,finalY -5 + i*13 ,drinks.Cocktails[numDrinks[i]-1].name);
-    }
-  
-  
-   doc.autoTable({
-      startY: doc.lastAutoTable.finalY + (numDrinks.length-1)*13,
-      theme: 'plain',
-      styles: {
-        fontSize: 12
-        },
-      columnStyles: {
-        0: {
-          cellWidth: 120,
-          fillColor: [207,207,207],
-          fontStyle: 'bold'
-        },
-        1: {
-        },
-        2:{
-        },
-        3:{
-        }
-      },
-      body: [
-        ['Uniforms', {content: ['White Shirt, Black Trousers/Jeans (NO RIPS)\nBlack Shoes (trainers allowed, but only black)',], colSpan: 3, styles: {fontStyle: 'bold'}}],
-        ['Hen Do Masterclass', {content: [client.henGuests,], styles: {fillColor: [255,255,0]}},formatter.format(henRate) + ' per person', formatter.format(henGuestCost)],
-        ['No. Flair Bartenders', {content: [client.flair,], styles: {fillColor: [255,255,0]}},formatter.format(flairRate) + ' per hour', formatter.format(flairCost)],
-        ['No. Cocktail Bartenders',{content: [client.bartender,], styles: {fillColor: [255,255,0]}},formatter.format(bartenderRate) +' per hour', formatter.format(bartenderCost)],
-        ['Ingredients Required',client.ingredients,'',formatter.format(ingredientCost)],
-        ['Bar Hire',{content: [client.bars,], styles: {fillColor: [255,255,0]}}, formatter.format(barRate) +' each', formatter.format(barCost)],
-        [glasswareTitle, glasswareCol1, glasswareCol2, glasswareCol3],
-        ['Travel Cost',{content: [client.travel,], styles: {fillColor: [255,255,0]}},'£' + travelRate +' per mile',formatter.format(travelCost)],
-        ['Extra Cost','','', formatter.format(client.extra)],
-        ['Total Cost','','', formatter.format(totalCost)],
-      ],
-    })
-    saveDoc(doc, "Event Sheet", _title )
-  
-  }
-}
-
-
-
-
-
-// Row Object constructor for shopping lists
+// row()
+//
+// Function takes the items we want in a shopping list row as inputs
+// Function creates a new objetc when called with 'new' keyword
+//
+// function is the Row Object constructor for shopping lists
 function row(name, volPerUnit, costPerUnit, totalVol, units){
   this.name = name
   this.volPerUnit = volPerUnit + units
