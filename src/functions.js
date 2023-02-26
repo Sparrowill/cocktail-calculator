@@ -5,7 +5,7 @@
 //////////////////////////////////////////
 // Global variables
 const path = './cocktails.json'; // Path to drink recipes json
-const MAX_COCKTAILS = 8 // Max selectable cocktails
+const MAX_COCKTAILS = 9 // Max selectable cocktails (-1)
 var clientDetails = Object;
 var shoppingList = Object;
 var chosenCocktails = Object;

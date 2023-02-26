@@ -1543,7 +1543,7 @@
             "id": 35,
             "name": "Hemmingway Daiquiri",
             "mocktail": "true",
-            "description": "Rum, Lime & marischino liqueur, shaken with grapefruit juice",
+            "description": "Rum, Lime & maraschino liqueur, shaken with grapefruit juice",
             "ingredients": {
                 "alcohol":[
                     {
@@ -1648,7 +1648,7 @@
         },
         {
             "id": 37,
-            "name": "Zombie TODO:",
+            "name": "Zombie",
             "mocktail": "true",
             "description": "A Tiki Tipple. Rum, and brandy with fruit juices",
             "ingredients": {
