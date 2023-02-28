@@ -1,5 +1,5 @@
 // Imports and module dependencies
-const {dialog, app, BrowserWindow, ipcMain } = require('electron');
+const {dialog, app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
 const { jsPDF } = require("jspdf"); // will automatically load the node version
 require("jspdf-autotable");
@@ -24,11 +24,68 @@ const formatter = new Intl.NumberFormat('en-GB', {
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
+const isMac = process.platform === 'darwin'
+
+const template = [
+  // { role: 'appMenu' }
+  ...(isMac ? [{
+    label: 'Cocktail Calculator',
+    submenu: [
+      { role: 'about' },
+      { type: 'separator' },
+      { role: 'services' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideOthers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
+    ]
+  }] : []),
+  // { role: 'fileMenu' }
+  {
+    label: 'File',
+    submenu: [
+      isMac ? { role: 'close' } : { role: 'quit' },
+      { role: 'forceReload' }
+    ]
+  },
+  // { role: 'editMenu' }
+  {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      
+      ...(isMac ? [
+        {
+          label: 'Speech',
+          submenu: [
+            { role: 'startSpeaking' },
+            { role: 'stopSpeaking' }
+          ]
+        }
+      ] : [
+      ])
+    ]
+  },
+  {
+    role: 'help',
+    submenu: [
+      {
+        label: 'User Guide',
+        click: async () => {
+          openAboutWindow()
+        }
+      }
+    ]
+  }
+]
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    
+    icon: path.join(__dirname,'/icons/icon.png'),
     // Backup dimensions in case maximise() is not supported
     width: 800,
     height: 600,
@@ -36,9 +93,11 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+  mainWindow.setIcon(path.join(__dirname, '/icons/icon.png'))
   mainWindow.maximize()
   mainWindow.removeMenu()
-
+  const customMenu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(customMenu)
   // Literal black magic to pass data from functions.js to here
   ipcMain.handle('JSON', (event) => getPrices())
   ipcMain.handle('PDF', (event, title, client, numDrinks, drinks, options, shoppingList) => {generateDocs(title, client, numDrinks, drinks, options, shoppingList)});
@@ -50,6 +109,7 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+var newWindow = null
 app.on('ready', createWindow);
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -192,8 +252,7 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
   }
   // App restart
   else if (options == 5) {
-    app.relaunch();
-    app.quit();
+    restartApp()
     
   } else{
     console.log("ERR: Options != 1-5, got ", options)
@@ -488,4 +547,43 @@ function row(name, volPerUnit, costPerUnit, totalVol, units){
   this.totalCost = this.unitsRequired * costPerUnit
 
 
+}
+
+// openAboutWindow() 
+//
+// Function takes no inputs,
+// Function returns no outputs
+//
+// Function creates a new Window that shows the README/User Guide
+function openAboutWindow() {
+  if (newWindow) {
+    newWindow.focus()
+    return
+  }
+
+  newWindow = new BrowserWindow({
+    height: 800,
+    resizable: false,
+    width: 750,
+    title: 'User Guide',
+    minimizable: false,
+    fullscreenable: false
+  })
+  newWindow.removeMenu()
+  newWindow.loadURL('file://' + __dirname + '/userguide.html')
+
+  newWindow.on('closed', function() {
+    newWindow = null
+  })
+}
+
+// restartApp()
+//
+// Function takes no inputs
+// Function returns no outputs
+//
+// Function restarts the application
+function restartApp() {
+  app.relaunch()
+  app.quit()
 }

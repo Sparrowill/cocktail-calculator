@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>User Guide</title>
+        <style>
+            #content {
+              font-family: Arial, Helvetica, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+            
+            td, th {
+              border: 1px solid #ddd;
+              padding: 8px;
+            }
+            
+            tr:nth-child(even){background-color: #f2f2f2;}
+            
+            tr:hover {background-color: #ddd;}
+            
+            th {
+              padding-top: 12px;
+              padding-bottom: 12px;
+              text-align: left;
+              background-color: #000000;
+              color: white;
+            }
+            </style>
+    </head>
+    <body>
+ <div id = content>
+    <h1 id="cocktail-calculator-user-guide">Cocktail Calculator User Guide</h1>
+<h2 id="page-1">Page 1</h2>
+<p>This page is designed to take in as much or as little client data as you have available. Whether it&#39;s just on the phone taking an initial enquiry, or you want to generate a full event sheet and invoice for a job that&#39;s been booked in since last year.</p>
+<p>All the fields are optional, you could just leave them all blank and it would still work. probably best not to though.</p>
+<h3 id="a-description-of-each-field-and-what-it-does">A Description of each field, and what it does:</h3>
+<p>All fields are optional and have very little error checking (you can pretty much put whatever you want in and it&#39;ll either work or not...)
+<br></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Client Name</td>
+<td>Input the client&#39;s full name, this is then used in the created file names, the Event Sheet, and the Shopping List. <br><b>If left blank, John Smith is used.</b></td>
+</tr>
+<tr>
+<td>1st Line Address</td>
+<td>Simple text field, used on the Event Sheet.</td>
+</tr>
+<tr>
+<td>2nd Line Address</td>
+<td>Simple text field, used on the Event Sheet.</td>
+</tr>
+<tr>
+<td>City</td>
+<td>Simple text field, used on the Event Sheet.</td>
+</tr>
+<tr>
+<td>Postcode</td>
+<td>Not case sensitive, used on the Event Sheet. <b> Will be converted to UPPER CASE </b></td>
+</tr>
+<tr>
+<td>Date of Event</td>
+<td>Must be a date. Is then used in the Event Sheet in the format yyyy-mm-dd.</td>
+</tr>
+<tr>
+<td>Start Time</td>
+<td>Time input for the start of the client&#39;s event, used on the Event Sheet.</td>
+</tr>
+<tr>
+<td>End Time</td>
+<td>Time input for the end of the client&#39;s event,used on the Event Sheet.</td>
+</tr>
+<tr>
+<td>Duration</td>
+<td>Number of hours the event runs for. Yes I could calculate this myself, but I prefer letting you define it.<br> This is then used to calculate invoice prices on the Event Sheet, and the amounts required in the Shopping List. <br> <b>If left blank, defaults to 1. </b></td>
+</tr>
+<tr>
+<td>Number of Guests</td>
+<td>The number of guests at the event.<br> This then used to calculate amounts required in the Shopping List. It&#39;s also used as the number of Hen Guests if &#39;Hen Do Masterclass&#39; is checked.<br><b>If left blank, defaults to 1</b></td>
+</tr>
+<tr>
+<td>Nature of Event</td>
+<td>Simple text field, used on the Event Sheet.</td>
+</tr>
+<tr>
+<td>No. Flair Bartenders</td>
+<td>The number of flair bartenders booked by the client, then used to calculate invoice prices on the Event Sheet.</td>
+</tr>
+<tr>
+<td>No. Cocktail Bartenders</td>
+<td>The number of flair bartenders booked by the client, then used to calculate invoice prices on the Event Sheet.</td>
+</tr>
+<tr>
+<td>No. Mobile Bars</td>
+<td>The number of mobile bars booked by the client. then used to calcualte invoice prices on the Event Sheet. <br> <b>If this is 0, then &#39;Charge Glassware&#39; has no effect.</td>
+</tr>
+<tr>
+<td>Hen Do Masterclass?</td>
+<td><b>If checked </b>, this takes the number of guests and uses them to calculate the invoice pricing on the Event Sheet. <br><b>Does not affect No. Cocktail Bartenders, or No. Flair Bartenders.</b></td>
+</tr>
+<tr>
+<td>Charge Glassware?</td>
+<td>If checked, this applies the formula £1 per person + £20 to the invice on the Event Sheet. <br><b> Does not appear on the Event Sheet if no bars have been hired.</b></td>
+</tr>
+<tr>
+<td>Charge Ingredients?</td>
+<td>If checked, this takes the total ingredient cost from the Shopping List, adds on 20%, then adds it to the invoice on the Event Sheet.</td>
+</tr>
+<tr>
+<td>Travel Cost (miles)</td>
+<td>This calculates mileage at £0.75 per mile. <br> <b>Defaults to 0</b></td>
+</tr>
+<tr>
+<td>Extra Cost (±£)</td>
+<td>Free number box to add or subtract cost as necessary. <br><b> Defaults to 0</b></td>
+</tr>
+</tbody></table>
+<h2 id="page-2">Page 2</h2>
+<p>Here the cocktails for the event can be selected. They are generated from the recipes stored in cocktails.json.</p>
+<p><b>Due to space constraints on the Menu and Event Sheet, a maximum of 8 different cocktails can be selected for any one event.</b> <br>Come ask me if you want me to take that limit off or increase it. </p>
+<h2 id="page-3">Page 3</h2>
+<p>The final step. All documents created are .pdf so are cross-platform (works on Windows, Mac, Linux). </p>
+<h3 id="event-sheetinvoice">Event Sheet/Invoice</h3>
+<p>A .pdf version of the spreadsheet. Takes all your inputs and creates something you can send to bar staff, and clients.</p>
+<h3 id="cocktail-menu">Cocktail Menu</h3>
+<p>A branded list of all the cocktails, designed to be printd out by the customer. Any mocktail friendly drinks are indicated.</p>
+<h3 id="shopping-list">Shopping List</h3>
+<p>This easily took the longest time of all three. Every ingredient from all the cocktails selected, combined and multiplied by the number of guests and the event length, combined with their standard sale quantities (700ml mosty) and prices (prices are on the low side).</p>
+<h3 id="a-description-of-each-button-and-what-it-does">A Description of each button, and what it does:</h3>
+<table>
+<thead>
+<tr>
+<th>Button</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Generate All Documents</td>
+<td>Produces 3 consecutive &#39;save&#39; windows for the Event Sheet, the Cocktail Menu, and the Shopping List.</td>
+</tr>
+<tr>
+<td>Generate Event Sheet/Invoice</td>
+<td>Produces a &#39;save&#39; window for the Event Sheet /Invoice</td>
+</tr>
+<tr>
+<td>Generate Cocktail Menu</td>
+<td>Produces a &#39;save&#39; window for the Cocktail Menu. This is designed to go in a frame on a bar, or to be sent out to guests beforehand.</td>
+</tr>
+<tr>
+<td>Generate Shopping List</td>
+<td>Produces a &#39;save&#39; window for a <b> Client Friendly </b> Shopping List. This is designed to be used when we aren&#39;t charging for ingredients, but works equally well if we&#39;re buying them ourselves.</td>
+</tr>
+<tr>
+<td>Start Again</td>
+<td>Wipes all inputted data and loads a a fresh instance. of Cocktail Calculator. useful when you&#39;re inputting multiple clients</td>
+</tr>
+</tbody></table>
+<h1 id="dev-contact">Dev Contact</h1>
+<p>For any bugs or feature requests, either raise them as issues on Github, or if you&#39;ve got my mobile number/email address, use it.</p>
+<p>© Will Sparrow 2023</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </div>       
+
+
+
+
+
+
+
+
+
+
+    </body>
