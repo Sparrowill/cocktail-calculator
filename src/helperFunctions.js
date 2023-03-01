@@ -9,7 +9,7 @@
 //
 // This function reads in the list 'cocktails.json' and passes it to storeCocktails
 function getCocktails() {
-  fetch(path)
+  fetch(cocktailPath)
   .then(response => response.json())
   .then(json => storeCocktails(json))
 }
@@ -129,6 +129,7 @@ function goToCheckboxes() {
 // Function checks that at least one, and no more than MAX_COCKTAILS
 // have been selected
 function checkErrors(values){
+
    // Error checking for empty array
    if(values.length>0 && values.length<MAX_COCKTAILS){
     document.getElementById('checkboxes').style.display = "none";
@@ -140,6 +141,7 @@ function checkErrors(values){
       return false 
   } else {
       console.error("ERR: Too Many Cocktails Selected, MAX_COCKTAILS is set to "+ MAX_COCKTAILS, values);
+      document.getElementById('overflowError').innerText = "Select up to " + (MAX_COCKTAILS-1).toString() +" cocktails"
       document.getElementById('overflowError').style.visibility = "visible";
       return false
   }

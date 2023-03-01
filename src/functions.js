@@ -3,13 +3,23 @@
 //
 // Functions to augment html functionality
 //////////////////////////////////////////
+//const { ipcRenderer } = window;
+
 // Global variables
-const path = './cocktails.json'; // Path to drink recipes json
-const MAX_COCKTAILS = 9 // Max selectable cocktails (-1)
+const cocktailPath = './cocktails.json'; // Path to drink recipes json
+const configPath = './config.json';
+var MAX_COCKTAILS = 9 // Max selectable cocktails (-1)
 var clientDetails = Object;
 var shoppingList = Object;
 var chosenCocktails = Object;
 var ids = [];
+
+window.api.receive('updateJSON',(message)=> {
+    console.log(message)
+    getMaxCocktails()
+});
+    
+
 
 // collectClientDetails()
 // Takes no input
@@ -20,7 +30,9 @@ var ids = [];
 // The function then moves the page on to selec cocktails required
 
 function collectClientDetails() {
+    // Update Json files on load
     doJSON()
+    getMaxCocktails()
     let details = document.querySelectorAll('input[name="details"]');
     let values = [];
     details.forEach((detail) => {
@@ -63,6 +75,7 @@ function collectClientDetails() {
 
 // This function takes all the inputted cocktails, and prints them to console
 function submitData() {
+
     // Hide any previous errors
     document.getElementById('overflowError').style.visibility = "hidden"; 
     document.getElementById('emptyArrayError').style.visibility = "hidden"; 
@@ -84,7 +97,7 @@ function submitData() {
 //
 // This function reads in the list 'cocktails.json' and passes it to storeCocktails
 function getIngredients(names) {
-    fetch(path)
+    fetch(cocktailPath)
     .then(response => response.json())
     .then(json => storeIngredients(json, names))
 }
@@ -339,3 +352,19 @@ const createPDF = async (title, content, numDrinks, drinks, options, shoppingLis
 const doJSON = async () => {
     window.versions.json()
     }
+
+// getIngredients()
+// 
+// Has no inputs
+// returns no outputs
+//
+// This function reads in the list 'config.json' and stores the MAX_COCKTAILS value in a global variable
+function getMaxCocktails() {
+    fetch(configPath)
+    .then(response => response.json())
+    .then(json => {
+        MAX_COCKTAILS = json.MAX_COCKTAILS+1
+
+    })
+}
+

@@ -9,7 +9,7 @@ require("./tahoma-bold");
 
 // Global Variable to get the ingredients out of async function hell
 var _ingredients
-
+var mainWindow
 //Multiplier for calcualting total volume required
 const DRINKS_PER_PERSON_PER_HOUR = 0.33
 
@@ -79,23 +79,36 @@ const template = [
         }
       }
     ]
+  },
+  {
+    label: 'Settings',
+    submenu: [
+      {
+        label: 'Update Max Cocktails',
+        click: async () => {
+          updateJSON()
+        }
+      }
+    ]
   }
 ]
 
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     icon: path.join(__dirname,'/icons/icon.png'),
     // Backup dimensions in case maximise() is not supported
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+
     },
   });
   mainWindow.setIcon(path.join(__dirname, '/icons/icon.png'))
   mainWindow.maximize()
   mainWindow.removeMenu()
+  mainWindow.webContents.openDevTools();
   const customMenu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(customMenu)
   // Literal black magic to pass data from functions.js to here
@@ -272,9 +285,10 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
 function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost){
   // Invoice Maths
   var ingredientCost = 0
+  var ingredientMarkup = 1.2
   if(client.ingredients == 'Yes'){
     //20% markup
-   ingredientCost = totalIngredientCost * 1.2
+   ingredientCost = totalIngredientCost * ingredientMarkup
   } else {
     ingredientCost = 0
   }
@@ -586,4 +600,9 @@ function openAboutWindow() {
 function restartApp() {
   app.relaunch()
   app.quit()
+}
+
+//Used to send an update event to the renderer
+function updateJSON(){
+  mainWindow.webContents.send('updateJSON', "HEllo World  It worked!");
 }

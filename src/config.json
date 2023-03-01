@@ -1,0 +1,11 @@
+{
+    "MAX_COCKTAILS": 8,
+    "HEN_RATE": 25,
+    "FLAIR_RATE": 72.50,
+    "BARTENDER_RATE": 52.50,
+    "BAR_RATE": 300,
+    "TRAVEL_RATE": 0.75,
+    "GLASSWARE_RATE": 1,
+    "GLASSWARE_BASE": 20,
+    "INGREDIENT_MARKUP":20
+}
