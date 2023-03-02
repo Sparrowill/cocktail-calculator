@@ -609,7 +609,7 @@ function restartApp() {
 
 //Used to send an update event to the renderer
 function updateJSON(){
-  mainWindow.webContents.send('updateJSON', "HEllo World  It worked!");
+  mainWindow.webContents.send('updateJSON', "");
 }
 
 function openSettings() {
@@ -640,10 +640,13 @@ function openSettings() {
   })
 }
 
+// Used to close the settings window via ipc call
 function closeSettings() {
+  updateJSON()
   settingsWindow.close();
 }
 
+// FS is a node module. So needs calling from the renderer to happen here. IPC call
 function writeFile(content){
   fs.writeFileSync(path.join(__dirname, 'config.json'),JSON.stringify(content),{encoding:'utf8',flag:'w'})
 }

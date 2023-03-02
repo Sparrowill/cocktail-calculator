@@ -362,8 +362,12 @@ function getMaxCocktails() {
     fetch(configPath)
     .then(response => response.json())
     .then(json => {
-        MAX_COCKTAILS = json.MAX_COCKTAILS+1
-
+        for (let i =0; i<json.Config.length;i++){
+            if(json.Config[i].name == 'MAX_COCKTAILS'){
+                MAX_COCKTAILS = json.Config[i].value
+            
+            }
+        }
     })
 }
 
