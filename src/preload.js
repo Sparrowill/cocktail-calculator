@@ -18,6 +18,7 @@ contextBridge.exposeInMainWorld('versions', {
   pdf: (title, content, numDrinks, drinks, options, shoppingList) => ipcRenderer.invoke('PDF', title, content, numDrinks, drinks, options, shoppingList),
   json: () => ipcRenderer.invoke('JSON'),
   exit: () => ipcRenderer.invoke('exit'),
+  edit: (content) => ipcRenderer.invoke('edit', content),
   // we can also expose variables, not just functions
 })
 

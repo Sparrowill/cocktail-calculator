@@ -116,6 +116,8 @@ const createWindow = () => {
   ipcMain.handle('JSON', (event) => getPrices())
   ipcMain.handle('PDF', (event, title, client, numDrinks, drinks, options, shoppingList) => {generateDocs(title, client, numDrinks, drinks, options, shoppingList)});
   ipcMain.handle('exit', (event) => closeSettings())
+  ipcMain.handle('edit', (event, content) => {writeFile(content)})
+
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   // Function to populate var _ingredients with contents of ingredients.json
   //getPrices() 
@@ -640,4 +642,8 @@ function openSettings() {
 
 function closeSettings() {
   settingsWindow.close();
+}
+
+function writeFile(content){
+  fs.writeFileSync(path.join(__dirname, 'config.json'),JSON.stringify(content),{encoding:'utf8',flag:'w'})
 }
