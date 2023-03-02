@@ -11,6 +11,18 @@ require("./tahoma-bold");
 var _ingredients
 var mainWindow
 var settingsWindow
+
+// Global Variable for settings updates
+var henRate = 25
+var flairRate = 72.50
+var bartenderRate = 52.50
+var barRate = 300
+var travelRate = 0.75
+var glasswareRate = 1
+var glasswareFlat = 20
+var ingredientCost = 0
+var ingredientMarkup = 1.2
+
 //Multiplier for calcualting total volume required
 const DRINKS_PER_PERSON_PER_HOUR = 0.33
 
@@ -109,7 +121,7 @@ const createWindow = () => {
   mainWindow.setIcon(path.join(__dirname, '/icons/icon.png'))
   mainWindow.maximize()
   mainWindow.removeMenu()
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
   const customMenu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(customMenu)
   // Literal black magic to pass data from functions.js to here
@@ -117,6 +129,7 @@ const createWindow = () => {
   ipcMain.handle('PDF', (event, title, client, numDrinks, drinks, options, shoppingList) => {generateDocs(title, client, numDrinks, drinks, options, shoppingList)});
   ipcMain.handle('exit', (event) => closeSettings())
   ipcMain.handle('edit', (event, content) => {writeFile(content)})
+  ipcMain.handle('updatePrices', (event,hen, flair, bartender, bar, travel, glassR, glassF, ingredientM)=> updateCosts( hen, flair, bartender, bar, travel, glassR, glassF, ingredientM))
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   // Function to populate var _ingredients with contents of ingredients.json
@@ -288,21 +301,14 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
 // the generated doc may extend onto two pages if many cocktails are selected.
 function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost){
   // Invoice Maths
-  var ingredientCost = 0
-  var ingredientMarkup = 1.2
+
   if(client.ingredients == 'Yes'){
     //20% markup
    ingredientCost = totalIngredientCost * ingredientMarkup
   } else {
     ingredientCost = 0
   }
-  henRate = 25
-  flairRate = 72.50
-  bartenderRate = 52.50
-  barRate = 300
-  travelRate = 0.75
-  glasswareRate = 1
-  glasswareFlat = 20
+  
   henGuestCost = Math.round(client.henGuests*henRate*100)/100
   flairCost = Math.round(client.flair*client.duration*flairRate*100)/100
   bartenderCost = Math.round(client.bartender*client.duration*bartenderRate*100)/100
@@ -318,7 +324,7 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
     glasswareCol1 = client.glassware
     if (client.glassware == 'Yes'){
       glasswareCol2 = formatter.format(glasswareRate) +' per person + ' + formatter.format(glasswareFlat)
-      glasswareCost = Math.round((glasswareFlat + (client.guests * glasswareRate))*100)/100
+      glasswareCost = Math.round((parseInt(glasswareFlat) + (client.guests * parseInt(glasswareRate)))*100)/100
       glasswareCol3  = formatter.format(glasswareCost)
     }
   } else {
@@ -327,7 +333,7 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
   }
   var extraCost = parseInt(client.extra)
 
-  totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + extraCost)*100)/100
+  totalCost = Math.round((parseInt(henGuestCost) + parseInt(flairCost) + parseInt(bartenderCost) + parseInt(barCost) + parseInt(travelCost) + parseInt(glasswareCost) + parseInt(ingredientCost) + parseInt(extraCost))*100)/100
 
 
   //PDF library to create event sheet
@@ -649,4 +655,15 @@ function closeSettings() {
 // FS is a node module. So needs calling from the renderer to happen here. IPC call
 function writeFile(content){
   fs.writeFileSync(path.join(__dirname, 'config.json'),JSON.stringify(content),{encoding:'utf8',flag:'w'})
+}
+
+function updateCosts( hen, flair, bartender, bar, travel, glassR, glassF, ingredientM) {
+ henRate = hen
+ flairRate = flair
+ bartenderRate = bartender
+ barRate = bar
+ travelRate = travel
+ glasswareRate = glassR
+ glasswareFlat = glassF
+ ingredientMarkup = ingredientM
 }

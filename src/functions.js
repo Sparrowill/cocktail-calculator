@@ -14,7 +14,6 @@ var chosenCocktails = Object;
 var ids = [];
 
 window.api.receive('updateJSON',(message)=> {
-    console.log(message)
     getMaxCocktails()
 });
     
@@ -362,12 +361,39 @@ function getMaxCocktails() {
     fetch(configPath)
     .then(response => response.json())
     .then(json => {
+        var henRate
+        var flairRate
+        var bartenderRate 
+        var barRate 
+        var travelRate 
+        var glasswareRate
+        var glasswareFlat
+        var ingredientMarkup
         for (let i =0; i<json.Config.length;i++){
             if(json.Config[i].name == 'MAX_COCKTAILS'){
                 MAX_COCKTAILS = json.Config[i].value
-            
+            } else if(json.Config[i].name == 'FLAIR_RATE'){
+                flairRate = json.Config[i].value
+            } else if(json.Config[i].name == 'HEN_RATE'){
+                henRate = json.Config[i].value
+            } else if(json.Config[i].name == 'BARTENDER_RATE'){
+                bartenderRate = json.Config[i].value
+            } else if(json.Config[i].name == 'BAR_RATE'){
+                barRate = json.Config[i].value
+            } else if(json.Config[i].name == 'TRAVEL_RATE'){
+                travelRate = json.Config[i].value
+            } else if(json.Config[i].name == 'GLASSWARE_RATE'){
+                glasswareRate = json.Config[i].value
+            }else if(json.Config[i].name == 'GLASSWARE_BASE'){
+                glasswareFlat = json.Config[i].value
+            } else if(json.Config[i].name == 'INGREDIENT_MARKUP'){
+                ingredientMarkup = (json.Config[i].value + 100)/100
+            } else{
+                console.error("ERR: Could not parse settings json", json)
             }
+            
         }
+        window.versions.updatePrices(henRate, flairRate, bartenderRate, barRate, travelRate, glasswareRate, glasswareFlat, ingredientMarkup)
     })
 }
 
