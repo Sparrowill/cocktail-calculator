@@ -45,7 +45,7 @@ All fields are optional and have very little error checking (you can pretty much
 
 Here the cocktails for the event can be selected. They are generated from the recipes stored in cocktails.json.
 
-<b>Due to space constraints on the Menu and Event Sheet, a maximum of 8 different cocktails can be selected for any one event.</b> <br>Come ask me if you want me to take that limit off or increase it. 
+<b>Due to space constraints on the Menu and Event Sheet, a maximum of 8 different cocktails can be selected for any one event.</b> <br>This can be overridden by accessing the Settings menu
 
 ## Page 3 ##
 
@@ -68,7 +68,8 @@ This easily took the longest time of all three. Every ingredient from all the co
 | Generate Cocktail Menu | Produces a 'save' window for the Cocktail Menu. This is designed to go in a frame on a bar, or to be sent out to guests beforehand.|
 | Generate Shopping List | Produces a 'save' window for a <b> Client Friendly </b> Shopping List. This is designed to be used when we aren't charging for ingredients, but works equally well if we're buying them ourselves.|
 | Start Again|   Wipes all inputted data and loads a a fresh instance. of Cocktail Calculator. useful when you're inputting multiple clients|
-
+# Menu #
+The menu at the top of the main window allows you to access a copy of this user guide, as well as update various settings in the program. Costs and the maximum number of cocktails can be updated at ANY time throughout the process. Even after putting all details in!
 # Dev Contact #
 
 For any bugs or feature requests, either raise them as issues on Github, or if you've got my mobile number/email address, use it.

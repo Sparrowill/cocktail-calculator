@@ -36,7 +36,7 @@ function save() {
             [
                 {
                     "name":"MAX_COCKTAILS",
-                    "text":  "MAX_COCKTAILS (Can fit up to 8 on a menu)",
+                    "text":  "MAX_COCKTAILS + 1 (Can fit up to 8 on a menu)",
                     "value": document.getElementById('MAX_COCKTAILS').value
                 },
                 {

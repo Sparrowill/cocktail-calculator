@@ -304,7 +304,8 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
 
   if(client.ingredients == 'Yes'){
     //20% markup
-   ingredientCost = totalIngredientCost * ingredientMarkup
+  
+   ingredientCost = parseFloat(totalIngredientCost) * ingredientMarkup
   } else {
     ingredientCost = 0
   }
@@ -324,16 +325,16 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
     glasswareCol1 = client.glassware
     if (client.glassware == 'Yes'){
       glasswareCol2 = formatter.format(glasswareRate) +' per person + ' + formatter.format(glasswareFlat)
-      glasswareCost = Math.round((parseInt(glasswareFlat) + (client.guests * parseInt(glasswareRate)))*100)/100
+      glasswareCost = Math.round((parseFloat(glasswareFlat) + (client.guests * parseFloat(glasswareRate)))*100)/100
       glasswareCol3  = formatter.format(glasswareCost)
     }
   } else {
     glasswareTitle = ''
     glasswareCol1 = ''
   }
-  var extraCost = parseInt(client.extra)
+  var extraCost = parseFloat(client.extra)
 
-  totalCost = Math.round((parseInt(henGuestCost) + parseInt(flairCost) + parseInt(bartenderCost) + parseInt(barCost) + parseInt(travelCost) + parseInt(glasswareCost) + parseInt(ingredientCost) + parseInt(extraCost))*100)/100
+  totalCost = Math.round((henGuestCost + flairCost + bartenderCost + barCost + travelCost + glasswareCost + ingredientCost + parseFloat(extraCost))*100)/100
 
 
   //PDF library to create event sheet
