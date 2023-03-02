@@ -10,6 +10,7 @@ require("./tahoma-bold");
 // Global Variable to get the ingredients out of async function hell
 var _ingredients
 var mainWindow
+var settingsWindow
 //Multiplier for calcualting total volume required
 const DRINKS_PER_PERSON_PER_HOUR = 0.33
 
@@ -84,9 +85,9 @@ const template = [
     label: 'Settings',
     submenu: [
       {
-        label: 'Update Max Cocktails',
+        label: 'Open Settings',
         click: async () => {
-          updateJSON()
+          openSettings()
         }
       }
     ]
@@ -114,6 +115,7 @@ const createWindow = () => {
   // Literal black magic to pass data from functions.js to here
   ipcMain.handle('JSON', (event) => getPrices())
   ipcMain.handle('PDF', (event, title, client, numDrinks, drinks, options, shoppingList) => {generateDocs(title, client, numDrinks, drinks, options, shoppingList)});
+  ipcMain.handle('exit', (event) => closeSettings())
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   // Function to populate var _ingredients with contents of ingredients.json
   //getPrices() 
@@ -581,7 +583,8 @@ function openAboutWindow() {
     width: 750,
     title: 'User Guide',
     minimizable: false,
-    fullscreenable: false
+    fullscreenable: false,
+ 
   })
   newWindow.removeMenu()
   newWindow.loadURL('file://' + __dirname + '/userguide.html')
@@ -605,4 +608,36 @@ function restartApp() {
 //Used to send an update event to the renderer
 function updateJSON(){
   mainWindow.webContents.send('updateJSON', "HEllo World  It worked!");
+}
+
+function openSettings() {
+  if (settingsWindow) {
+    settingsWindow.focus()
+    return
+  }
+
+  settingsWindow = new BrowserWindow({
+    height: 800,
+    resizable: false,
+    width: 750,
+    title: 'Settings',
+    minimizable: false,
+    fullscreenable: false,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+
+    },
+  })
+  //settingsWindow.webContents.openDevTools();
+
+  settingsWindow.removeMenu()
+  settingsWindow.loadURL('file://' + __dirname + '/config.html')
+
+  settingsWindow.on('closed', function() {
+    settingsWindow = null
+  })
+}
+
+function closeSettings() {
+  settingsWindow.close();
 }

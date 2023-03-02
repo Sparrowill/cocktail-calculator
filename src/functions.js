@@ -3,7 +3,6 @@
 //
 // Functions to augment html functionality
 //////////////////////////////////////////
-//const { ipcRenderer } = window;
 
 // Global variables
 const cocktailPath = './cocktails.json'; // Path to drink recipes json

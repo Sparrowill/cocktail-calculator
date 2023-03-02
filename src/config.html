@@ -4,17 +4,21 @@
 <head>
     <meta charset="UTF-8" />
     <title>Cocktail Calculator</title>
-   
+    <link rel="stylesheet" href="./config.css" />
     <script src="./config.js"></script>
     
   </head>
-  <body>
-   
-
-        
-        <input id="MAX_COCKTAILS" type="range" min="1" max="37" value="8" name="input">
-        <p id="rangeValue"> </p>
-
+  <body onload="createPage();">
+    <div id="Heading">
+      <h1>Settings</h1>
+      <h4>Use this page to change things like prices</h4>
+    </div>
+   <div id="settings"></div>
+   <div id="buttons">
+    <br><br>
+    <button type="submit" onclick=save()>Save & Exit</button>
+    <button type="submit" onclick="quit()">Exit</button>
+   </div>
 </body>
 
 </html>
