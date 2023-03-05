@@ -27,7 +27,7 @@ All fields are optional and have very little error checking (you can pretty much
 | Postcode                  | Not case sensitive, used on the Event Sheet. <b> Will be converted to UPPER CASE </b>|
 | Date of Event             | Must be a date. Is then used in the Event Sheet in the format yyyy-mm-dd.|
 | Start Time                | Time input for the start of the client's event, used on the Event Sheet.|
-| End Time                  | Time input for the end of the client's event,used on the Event Sheet.
+| End Time                  | Time input for the end of the client's event, used on the Event Sheet.|
 | Duration                  |  Number of hours the event runs for. Yes I could calculate this myself, but I prefer letting you define it.<br> This is then used to calculate invoice prices on the Event Sheet, and the amounts required in the Shopping List. <br> <b>If left blank, defaults to 1. </b>|
 | Number of Guests         | The number of guests at the event.<br> This then used to calculate amounts required in the Shopping List. It's also used as the number of Hen Guests if 'Hen Do Masterclass' is checked.<br><b>If left blank, defaults to 1</b>|
 | Nature of Event           | Simple text field, used on the Event Sheet.
@@ -68,6 +68,8 @@ This easily took the longest time of all three. Every ingredient from all the co
 | Generate Cocktail Menu | Produces a 'save' window for the Cocktail Menu. This is designed to go in a frame on a bar, or to be sent out to guests beforehand.|
 | Generate Shopping List | Produces a 'save' window for a <b> Client Friendly </b> Shopping List. This is designed to be used when we aren't charging for ingredients, but works equally well if we're buying them ourselves.|
 | Start Again|   Wipes all inputted data and loads a a fresh instance. of Cocktail Calculator. useful when you're inputting multiple clients|
+# Menu #
+The menu at the top of the main window allows you to access a copy of this user guide, as well as update various settings in the program. Costs and the maximum number of cocktails can be updated at ANY time throughout the process. Even after putting all details in!
 
 # Dev Contact #
 
