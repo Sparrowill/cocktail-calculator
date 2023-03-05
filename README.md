@@ -28,12 +28,12 @@ All fields are optional and have very little error checking (you can pretty much
 | Date of Event             | Must be a date. Is then used in the Event Sheet in the format yyyy-mm-dd.|
 | Start Time                | Time input for the start of the client's event, used on the Event Sheet.|
 | End Time                  | Time input for the end of the client's event, used on the Event Sheet.|
-| Duration                  |  Number of hours the event runs for. Yes I could calculate this myself, but I prefer letting you define it.<br> This is then used to calculate invoice prices on the Event Sheet, and the amounts required in the Shopping List. <br> <b>If left blank, defaults to 1. </b>|
-| Number of Guests         | The number of guests at the event.<br> This then used to calculate amounts required in the Shopping List. It's also used as the number of Hen Guests if 'Hen Do Masterclass' is checked.<br><b>If left blank, defaults to 1</b>|
+| Duration                  |  Number of hours the event runs for. Yes I could calculate this myself, but I prefer letting you define it.<br> This is then used to calculate invoice prices on the Event Sheet, and the amounts required in the Shopping List. <br> <b>Defaults to 1. </b>|
+| Number of Guests         | The number of guests at the event.<br> This then used to calculate amounts required in the Shopping List. It's also used as the number of Hen Guests if 'Hen Do Masterclass' is checked.<br><b>Defaults to 1</b>|
 | Nature of Event           | Simple text field, used on the Event Sheet.
-|No. Flair Bartenders       | The number of flair bartenders booked by the client, then used to calculate invoice prices on the Event Sheet.|
-| No. Cocktail Bartenders   | The number of flair bartenders booked by the client, then used to calculate invoice prices on the Event Sheet.|
-| No. Mobile Bars            | The number of mobile bars booked by the client. then used to calcualte invoice prices on the Event Sheet. <br> <b>If this is 0, then 'Charge Glassware' has no effect.|
+|No. Flair Bartenders       | The number of flair bartenders booked by the client, then used to calculate invoice prices on the Event Sheet. <b> Defaults to 0</b>|
+| No. Cocktail Bartenders   | The number of flair bartenders booked by the client, then used to calculate invoice prices on the Event Sheet. <b> Defaults to 0</b>|
+| No. Mobile Bars            | The number of mobile bars booked by the client. then used to calcualte invoice prices on the Event Sheet. <br> <b>If this is 0, then 'Charge Glassware' has no effect. Defaults to 0.</b>|
 | Hen Do Masterclass?       | <b>If checked </b>, this takes the number of guests and uses them to calculate the invoice pricing on the Event Sheet. <br><b>Does not affect No. Cocktail Bartenders, or No. Flair Bartenders.</b>|
 | Charge Glassware?         | If checked, this applies the formula £1 per person + £20 to the invice on the Event Sheet. <br><b> Does not appear on the Event Sheet if no bars have been hired.</b>|
 | Charge Ingredients?       | If checked, this takes the total ingredient cost from the Shopping List, adds on 20%, then adds it to the invoice on the Event Sheet.|
