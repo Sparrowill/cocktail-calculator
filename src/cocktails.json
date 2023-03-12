@@ -701,7 +701,7 @@
                 "garnish":[
                     {
                         "name": "mint leaves",
-                        "volume": 10,
+                        "volume": 2,
                         "unit": "g"
                     }
                 ],
@@ -938,7 +938,7 @@
                 "garnish":[
                     {
                         "name":"mint leaves",
-                        "volume": 10,
+                        "volume": 3,
                         "unit": "g"
                     }
                 ],
@@ -1133,7 +1133,7 @@
                 "other":[
                     {
                         "name": "vanilla extract",
-                        "volume": 5,
+                        "volume": 1,
                         "unit": "ml"
                     }
                 ]
@@ -1526,7 +1526,7 @@
                 "garnish":[
                     {
                         "name":"mint leaves",
-                        "volume": 10,
+                        "volume": 2,
                         "unit": "g"
                     }
                 ],

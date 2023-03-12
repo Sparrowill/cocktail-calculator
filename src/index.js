@@ -212,6 +212,8 @@ function getRows(duration, numGuests, shoppingList, ingredients) {
     totalVol = shoppingList[i].volume * duration * numGuests * DRINKS_PER_PERSON_PER_HOUR
     tableRows.push(new row(shoppingList[i].name,volPerUnit,costPerUnit,totalVol,shoppingList[i].unit))
   }
+  //0.5kg per person per 3 hrs
+  tableRows.push(new row('Ice','1','1',numGuests*duration*0.5*0.3,'kg'))
   //  calculate total ingredient cost
   totalIngredientCost = 0
   for (let k=0;k<tableRows.length;k++){
