@@ -235,7 +235,7 @@
                         "unit": "ml"
                     },
                     {
-                        "name":"cointreau",
+                        "name":"triple sec/cointreau",
                         "volume": 15,
                         "unit": "ml"
                     }
@@ -415,7 +415,7 @@
             "ingredients": {
                 "alcohol":[
                     {
-                        "name":"cointreau",
+                        "name":"triple sec/cointreau",
                         "volume": 15,
                         "unit": "ml"
                     },
@@ -737,7 +737,7 @@
                         "unit": "ml"
                     },
                     {
-                        "name":"cointreau",
+                        "name":"triple sec/cointreau",
                         "volume": 12.5,
                         "unit": "ml"
                     }
@@ -877,7 +877,7 @@
                         "unit": "ml"
                     },
                     {
-                        "name":"cointreau",
+                        "name":"triple sec/cointreau",
                         "volume": 15,
                         "unit": "ml"
                     }

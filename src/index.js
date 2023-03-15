@@ -541,13 +541,13 @@ function generateShoppingList(title, tableRows, totalIngredientCost, date)
 const saveDoc = async (doc, type, title, date) => {
   let settings = {
     title: 'Save ' + type + ' As...',
-    defaultPath: app.getPath('documents') + "/" + type + " - " + title + " - " + date + ".pdf",
+    defaultPath: app.getPath('documents') + "/" + title + " - " + date + " - " + type + ".pdf",
     //buttonLabel: 'Save ' + type ,
     filters: [
       {name: 'pdf Files', extensions: ['pdf'] },
       {name: 'All Files', extensions: ['*'] }
     ],
-    message: type + " - " + title + " - " + date + ".pdf",
+    message:  title + " - " + date + " - " + type + ".pdf",
     properties: ['createDirectory']
   }
   const saveWindow = await dialog.showSaveDialog(BrowserWindow.getFocusedWindow(), settings)
