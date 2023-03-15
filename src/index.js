@@ -250,8 +250,8 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
       rowsGenerated = 'Yes'
     }
     generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost)
-    generateEventMenu(title, numDrinks, drinks)
-    generateShoppingList(title, tableRows, totalIngredientCost)
+    generateEventMenu(title, numDrinks, drinks, client.date)
+    generateShoppingList(title, tableRows, totalIngredientCost, client.date)
 
 
   }
@@ -268,7 +268,7 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
   }
   // generate Bar Menu
   else if (options == 3) {
-    generateEventMenu(title, numDrinks, drinks)
+    generateEventMenu(title, numDrinks, drinks, client.date)
   }
   // Generate client shopping list
   else if (options == 4) {
@@ -279,7 +279,7 @@ function generateDocs(title, client, numDrinks, drinks, options, shoppingList){
       totalIngredientCost = returnArr[1]
       rowsGenerated = 'Yes'
     }
-  generateShoppingList(title, tableRows, totalIngredientCost)
+  generateShoppingList(title, tableRows, totalIngredientCost, client.date)
     
   }
   // App restart
@@ -418,7 +418,7 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
       ['Total Cost','','', formatter.format(totalCost)],
     ],
   })
-  saveDoc(doc, "Event Sheet", title )
+  saveDoc(doc, "Event Sheet", title, client.date )
 
 }
 
@@ -431,7 +431,7 @@ function generateEventSheet(title, client, numDrinks,drinks, totalIngredientCost
 // For 7 or fewer drinks, the cocktailhire logo is also displayed
 // for 8 drinks, just a cocktailhire title is shown
 // WARNING: More than 8 drinks will cause drinks to go off the page.
-function generateEventMenu(title, numDrinks, drinks){
+function generateEventMenu(title, numDrinks, drinks, date){
   var doc = new jsPDF("portrait","px","a4");
   var width = doc.internal.pageSize.getWidth();
   doc.setFont('Tahoma', 'bold')
@@ -473,7 +473,7 @@ function generateEventMenu(title, numDrinks, drinks){
     
   }
   // Pass to save doc function
-  saveDoc(doc, "Cocktail Menu", title )
+  saveDoc(doc, "Cocktail Menu", title, date )
 }
 
 // generateShoppingList()
@@ -485,7 +485,7 @@ function generateEventMenu(title, numDrinks, drinks){
 // Doesn't use autotable becuase that doesn't really support varying row numbers
 // That's p much it really
 // currentY and currentX are used to keep track of cursor position
-function generateShoppingList(title, tableRows, totalIngredientCost)
+function generateShoppingList(title, tableRows, totalIngredientCost, date)
 {
   
     var doc = new jsPDF("portrait","px","a4");
@@ -525,12 +525,12 @@ function generateShoppingList(title, tableRows, totalIngredientCost)
     doc.setFont('Tahoma', 'bold')
     doc.text("Total Cost: " + formatter.format(totalIngredientCost),  312, currentY)
 
-    saveDoc(doc, "Shopping List", title ) 
+    saveDoc(doc, "Shopping List", title, date ) 
 }
 
 // saveDoc()
 //
-// Function takes the pdf doc object, the type of doc it is, and the name of the client as inputs
+// Function takes the pdf doc object, the type of doc it is, the name of the client, and the date of the event as inputs
 // Function returns no outputs
 //
 // Function opens a save dialog with a load of useful preinput data, see the showSaveDialog docs for options.
@@ -538,16 +538,16 @@ function generateShoppingList(title, tableRows, totalIngredientCost)
 // BUG: If the save window is cancelled, the pdf is saved as generated.pdf in the app filesystem.
 // Only one doc is stored at once (overwrites)
 // no biggy, mainly cos I can't fix it
-const saveDoc = async (doc, type, title) => {
+const saveDoc = async (doc, type, title, date) => {
   let settings = {
     title: 'Save ' + type + ' As...',
-    defaultPath: app.getPath('documents') + "/" + type + " - " + title +" .pdf",
+    defaultPath: app.getPath('documents') + "/" + type + " - " + title + " - " + date + ".pdf",
     //buttonLabel: 'Save ' + type ,
     filters: [
       {name: 'pdf Files', extensions: ['pdf'] },
       {name: 'All Files', extensions: ['*'] }
     ],
-    message: type + " - " + title + ".pdf",
+    message: type + " - " + title + " - " + date + ".pdf",
     properties: ['createDirectory']
   }
   const saveWindow = await dialog.showSaveDialog(BrowserWindow.getFocusedWindow(), settings)
