@@ -45,12 +45,16 @@ function collectClientDetails() {
             }
         }
         // Convert Date to UK format
+        itemtoPush = detail.value
         if(detail.id == 'date'){
             detail.value = detail.value.toLocaleString('en-GB')
-            console.log("Date = ")
-            console.log(detail.value)
+            year = detail.value.substring(0,4)
+            month = detail.value.substring(5,7)
+            day = detail.value.substring(8,10)
+            newDate = day.concat('-', month,'-', year)
+            itemtoPush = newDate
         }
-        values.push(detail.value);
+        values.push(itemtoPush);
     });
     goToCheckboxes()
         /*names, address1, address2 = null, city, postcode, date, start, end, duration, guests, type, 
