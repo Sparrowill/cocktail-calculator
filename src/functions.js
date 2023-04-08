@@ -44,6 +44,12 @@ function collectClientDetails() {
                 detail.value = 'No'
             }
         }
+        // Convert Date to UK format
+        if(detail.id == 'date'){
+            detail.value = detail.value.toLocaleString('en-GB')
+            console.log("Date = ")
+            console.log(detail.value)
+        }
         values.push(detail.value);
     });
     goToCheckboxes()
