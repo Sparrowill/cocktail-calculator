@@ -210,6 +210,10 @@ function getRows(duration, numGuests, shoppingList, ingredients) {
     }
     // Calculate total Volume of ingredient required
     totalVol = shoppingList[i].volume * duration * numGuests * DRINKS_PER_PERSON_PER_HOUR
+    // If ingredient is a fruit juice, increase amount required by 25%
+    if(shoppingList[i].name.includes("Juice")){
+      totalVol = totalVol*1.25
+    }
     tableRows.push(new row(shoppingList[i].name,volPerUnit,costPerUnit,totalVol,shoppingList[i].unit))
   }
   //0.5kg per person per 3 hrs
@@ -524,7 +528,10 @@ function generateShoppingList(title, tableRows, totalIngredientCost, date)
     }
     doc.setFont('Tahoma', 'bold')
     doc.text("Total Cost: " + formatter.format(totalIngredientCost),  312, currentY)
-
+    currentY += 20
+    doc.text("Due to a combination of environmental concerns and issues with paper straws, we no longer supply straws as part of our equipment.", 45, currentY)
+    currentY += 13
+    doc.text("However, we will happily use any straws you provide us with", 45, currentY)
     saveDoc(doc, "Shopping List", title, date ) 
 }
 
