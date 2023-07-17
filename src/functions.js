@@ -249,7 +249,10 @@ function combineJuices(juicesList, juices){
                     continue;
                 }
             }
-            if(!duplicate){juicesList.push(juices[j]);}
+            if(!duplicate){
+                juices[j].volume = (juices[j].volume*1.25);
+                juicesList.push(juices[j]);
+            }
         }
     }
     return;
