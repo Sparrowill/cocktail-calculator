@@ -243,8 +243,8 @@ function combineJuices(juicesList, juices){
             for(let k = 0; k < juicesList.length; k++){
                 //If duplicate juices
                 if(juicesList[k].name == juices[j].name) {
-                    // Add volumes
-                    juicesList[k].volume += juices[j].volume;
+                    // Add volumes, increase by 25% to make sure we have enough.
+                    juicesList[k].volume += (juices[j].volume*1.25);
                     duplicate = true;
                     continue;
                 }

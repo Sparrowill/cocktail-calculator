@@ -210,10 +210,7 @@ function getRows(duration, numGuests, shoppingList, ingredients) {
     }
     // Calculate total Volume of ingredient required
     totalVol = shoppingList[i].volume * duration * numGuests * DRINKS_PER_PERSON_PER_HOUR
-    // If ingredient is a fruit juice, increase amount required by 25%
-    if(shoppingList[i].name.includes("Juice")){
-      totalVol = totalVol*1.25
-    }
+
     tableRows.push(new row(shoppingList[i].name,volPerUnit,costPerUnit,totalVol,shoppingList[i].unit))
   }
   //0.5kg per person per 3 hrs
