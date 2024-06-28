@@ -1749,7 +1749,7 @@
             "id": 39,
             "name": "French Martini",
             "mocktail": "false",
-            "description": "Class in a glass",
+            "description": "Class in a glass. Pineapple and raspberry, vodka as the base.",
             "ingredients": {
                 "alcohol":[
                     {
