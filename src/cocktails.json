@@ -1697,6 +1697,97 @@
                     }
                 ]
             }            
+        },
+        {
+            "id": 38,
+            "name": "Paloma",
+            "mocktail": "false",
+            "description": "A new modern favourite. Tequila and grapefruit, with a dash of agave.",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"triple sec/cointreau",
+                        "volume": 15,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"tequila",
+                        "volume": 35,
+                        "unit": "ml"
+                    }
+                ],
+                "juices":[
+                    {
+                        "name":"grapefruit juice",
+                        "volume": 50,
+                        "unit": "ml"
+                    }
+                    ],
+                "mixers":[
+                    {
+
+                    }
+                ],
+                "garnish":[
+                    {
+                      "name": "grapefruit",
+                      "volume": 0.1,
+                      "unit": "pcs"
+                    }
+
+                    ],
+                "other":[
+                    {
+                        "name": "agave syrup",
+                        "volume": 5,
+                        "unit": "ml"
+                    }
+                    ]
+            }
+        },
+        {
+            "id": 39,
+            "name": "French Martini",
+            "mocktail": "false",
+            "description": "Class in a glass",
+            "ingredients": {
+                "alcohol":[
+                    {
+                        "name":"vodka",
+                        "volume": 35,
+                        "unit": "ml"
+                    },
+                    {
+                        "name":"chambord",
+                        "volume": 15,
+                        "unit": "ml"
+                    }            
+                ],
+                "juices":[
+                    {
+                        "name":"pineapple juice",
+                        "volume": 100,
+                        "unit": "ml" 
+                    }
+                ],
+                "mixers":[
+                    {
+                        
+                    }
+                ],
+                "garnish":[
+                    {
+                        "name":"raspberry",
+                        "volume": 1,
+                        "unit": "pcs"
+                    }
+                ],
+                "other":[
+                    {
+                     
+                    }
+                ]
+            }            
         }
     ]
 }
